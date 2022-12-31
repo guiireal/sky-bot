@@ -1,9 +1,9 @@
-const connect = require('./connection')
-const middlewares = require('./middlewares')
+const connect = require("./connection");
+const middlewares = require("./middlewares");
 
 async function start() {
-  const bot = await connect()
-  await middlewares(bot)
+  const bot = await connect();
+  await middlewares(bot);
 }
 
-start()
+start();

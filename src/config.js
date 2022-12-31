@@ -1,11 +1,11 @@
-const path = require('path')
+const path = require("path");
 
-const PREFIX = '/'
-const BOT_EMOJI = '🤖'
-const TEMP_FOLDER = path.resolve(__dirname, '..', 'assets', 'temp')
+const PREFIX = "/";
+const BOT_EMOJI = "🤖";
+const TEMP_FOLDER = path.resolve(__dirname, "..", "assets", "temp");
 
 module.exports = {
   BOT_EMOJI,
   PREFIX,
-  TEMP_FOLDER
-}
+  TEMP_FOLDER,
+};

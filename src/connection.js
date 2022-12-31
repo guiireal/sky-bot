@@ -1,29 +1,36 @@
-const { default: makeWASocket, DisconnectReason, useMultiFileAuthState } = require('@adiwajshing/baileys')
+const {
+  default: makeWASocket,
+  DisconnectReason,
+  useMultiFileAuthState,
+} = require("@adiwajshing/baileys");
 
 async function connect() {
-  const { state, saveCreds } = await useMultiFileAuthState('./assets/auth/baileys')
+  const { state, saveCreds } = await useMultiFileAuthState(
+    "./assets/auth/baileys"
+  );
 
   const bot = makeWASocket({
     printQRInTerminal: true,
     auth: state,
-    defaultQueryTimeoutMs: undefined
-  })
+    defaultQueryTimeoutMs: undefined,
+  });
 
-  bot.ev.on('connection.update', (update) => {
-    const { connection, lastDisconnect } = update
+  bot.ev.on("connection.update", (update) => {
+    const { connection, lastDisconnect } = update;
 
-    if (connection === 'close') {
-      const shouldReconnect = lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut
+    if (connection === "close") {
+      const shouldReconnect =
+        lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
       if (shouldReconnect) {
-        connect()
+        connect();
       }
     }
-  })
+  });
 
-  bot.ev.on('creds.update', saveCreds)
+  bot.ev.on("creds.update", saveCreds);
 
-  return bot
+  return bot;
 }
 
 module.exports = connect;
