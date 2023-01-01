@@ -14,8 +14,6 @@ async function middlewares(bot) {
 
     const { command, remoteJid } = extractDataFromMessage(baileysMessage);
 
-    console.log(command.toLowerCase());
-
     switch (command.toLowerCase()) {
       case "f":
       case "fig":
