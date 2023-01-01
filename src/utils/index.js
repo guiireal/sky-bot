@@ -17,11 +17,13 @@ function extractDataFromMessage(baileysMessage) {
       command: "",
       args: "",
       isImage: false,
+      isVideo: false,
       isSticker: false,
     };
   }
 
   const isImage = is(baileysMessage, "image");
+  const isVideo = is(baileysMessage, "video");
   const isSticker = is(baileysMessage, "sticker");
 
   const [command, ...args] = fullMessage.trim().split(" ");
@@ -34,6 +36,7 @@ function extractDataFromMessage(baileysMessage) {
     command: command.replace(PREFIX, "").trim(),
     args: arg.trim(),
     isImage,
+    isVideo,
     isSticker,
   };
 }
@@ -62,14 +65,14 @@ function isCommand(baileysMessage) {
   return fullMessage && fullMessage.startsWith(PREFIX);
 }
 
-async function downloadImage(baileysMessage, fileName) {
-  const content = getContent(baileysMessage, "image");
+async function download(baileysMessage, fileName, context, extension) {
+  const content = getContent(baileysMessage, context);
 
   if (!content) {
     return null;
   }
 
-  const stream = await downloadContentFromMessage(content, "image");
+  const stream = await downloadContentFromMessage(content, context);
 
   let buffer = Buffer.from([]);
 
@@ -77,37 +80,28 @@ async function downloadImage(baileysMessage, fileName) {
     buffer = Buffer.concat([buffer, chunk]);
   }
 
-  const filePath = path.resolve(TEMP_FOLDER, `${fileName}.png`);
+  const filePath = path.resolve(TEMP_FOLDER, `${fileName}.${extension}`);
 
   await writeFile(filePath, buffer);
 
   return filePath;
 }
 
+async function downloadImage(baileysMessage, fileName) {
+  return await download(baileysMessage, fileName, "image", "png");
+}
+
 async function downloadSticker(baileysMessage, fileName) {
-  const content = getContent(baileysMessage, "sticker");
+  return await download(baileysMessage, fileName, "sticker", "webp");
+}
 
-  if (!content) {
-    return null;
-  }
-
-  const stream = await downloadContentFromMessage(content, "sticker");
-
-  let buffer = Buffer.from([]);
-
-  for await (const chunk of stream) {
-    buffer = Buffer.concat([buffer, chunk]);
-  }
-
-  const filePath = path.resolve(TEMP_FOLDER, `${fileName}.webp`);
-
-  await writeFile(filePath, buffer);
-
-  return filePath;
+async function downloadVideo(baileysMessage, fileName) {
+  return await download(baileysMessage, fileName, "video", "mp4");
 }
 
 module.exports = {
   downloadImage,
+  downloadVideo,
   downloadSticker,
   extractDataFromMessage,
   isCommand,
