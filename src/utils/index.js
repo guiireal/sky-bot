@@ -7,8 +7,10 @@ function extractDataFromMessage(baileysMessage) {
   const textMessage = baileysMessage.message?.conversation;
   const extendedTextMessage = baileysMessage.message?.extendedTextMessage?.text;
   const imageTextMessage = baileysMessage.message?.imageMessage?.caption;
+  const videoTextMessage = baileysMessage.message?.videoMessage?.caption;
 
-  const fullMessage = textMessage || extendedTextMessage || imageTextMessage;
+  const fullMessage =
+    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage;
 
   if (!fullMessage) {
     return {
