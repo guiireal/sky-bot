@@ -15,6 +15,9 @@ async function middlewares(bot) {
     const { command, remoteJid } = extractDataFromMessage(baileysMessage);
 
     switch (command.toLowerCase()) {
+      case "cep":
+        await action.cep();
+        break;
       case "f":
       case "fig":
       case "s":
