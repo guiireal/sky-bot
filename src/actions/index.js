@@ -1,4 +1,4 @@
-const { BOT_EMOJI, TEMP_FOLDER } = require("../config");
+const { BOT_EMOJI, TEMP_FOLDER, OPENAI_API_KEY } = require("../config");
 const { consultarCep } = require("correios-brasil");
 const {
   extractDataFromMessage,
@@ -10,6 +10,7 @@ const path = require("path");
 const { exec } = require("child_process");
 const fs = require("fs");
 const { errorMessage, warningMessage } = require("../utils/messages");
+const axios = require("axios");
 
 class Action {
   constructor(bot, baileysMessage) {
@@ -181,6 +182,48 @@ Envie um vídeo menor!`),
       fs.unlinkSync(inputPath);
       fs.unlinkSync(outputPath);
     });
+  }
+
+  async gpt() {
+    await this.bot.sendMessage(this.remoteJid, {
+      react: {
+        text: "⌛",
+        key: this.baileysMessage.key,
+      },
+    });
+
+    const { data } = await axios.post(
+      `https://api.openai.com/v1/chat/completions`,
+      {
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: this.args }],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+        },
+      }
+    );
+
+    await this.bot.sendMessage(this.remoteJid, {
+      react: {
+        text: "✅",
+        key: this.baileysMessage.key,
+      },
+    });
+
+    const responseText = data.choices[0].message.content;
+
+    await this.bot.sendMessage(
+      this.remoteJid,
+      {
+        text: `${BOT_EMOJI} ${responseText}`,
+      },
+      {
+        quoted: this.baileysMessage,
+      }
+    );
   }
 }
 

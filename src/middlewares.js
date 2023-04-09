@@ -37,6 +37,9 @@ async function middlewares(bot) {
       case "toimg":
         await action.toImage();
         break;
+      case "gpt":
+        await action.gpt();
+        break;
     }
   });
 }
