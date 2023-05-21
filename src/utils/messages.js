@@ -1,12 +1,6 @@
-const { BOT_EMOJI, BOT_NAME, PREFIX } = require("../config");
+const { BOT_NAME, PREFIX } = require("../config");
 
-exports.errorMessage = (message) => {
-  return `${BOT_EMOJI} ❌ Erro! ${message}`;
-};
-
-exports.warningMessage = (message) => {
-  return `${BOT_EMOJI} ⚠ Atenção! ${message}`;
-};
+exports.waitMessage = () => "Carregando dados...";
 
 exports.menuMessage = () => {
   const date = new Date();

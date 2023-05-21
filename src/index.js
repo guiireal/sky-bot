@@ -1,9 +1,9 @@
-const connect = require("./connection");
-const middlewares = require("./middlewares");
+const { connect } = require("./connection");
+const { load } = require("./loader");
 
 async function start() {
   const bot = await connect();
-  await middlewares(bot);
+  load(bot);
 }
 
 start();

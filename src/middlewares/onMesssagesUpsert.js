@@ -1,11 +1,9 @@
-const { exportCommomFunctions } = require("../loader");
+const { dynamicCommand } = require("../utils/dynamicCommand");
+const { loadCommomFunctions } = require("../utils/loadCommomFunctions");
 
 exports.onMessagesUpsert = async ({ bot, messages }) => {
-  const message = messages[0];
-  const commonFunctions = exportCommomFunctions({ bot, message });
+  const baileysMessage = messages[0];
+  const commonFunctions = loadCommomFunctions({ bot, baileysMessage });
 
-  await dynamicHandle({
-    ...commonFunctions,
-    initialPing: now(),
-  });
+  await dynamicCommand(commonFunctions);
 };

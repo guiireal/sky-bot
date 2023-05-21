@@ -1,9 +1,10 @@
-const { DangerError } = require("../errors");
-const { InvalidParameterError, WarningError } = require("../errors");
-const { findCommandImport } = require("../utils");
+const { DangerError } = require("../errors/DangerError");
+const { InvalidParameterError } = require("../errors/InvalidParameterError");
+const { WarningError } = require("../errors/WarningError");
+const { findCommandImport } = require(".");
 
 exports.dynamicCommand = async (paramsHandler) => {
-  const { commandName } = paramsHandler;
+  const { commandName, sendWarningReply, sendErrorReply } = paramsHandler;
   const { type, command } = findCommandImport(commandName);
 
   if (!type || !command) {
@@ -28,7 +29,7 @@ exports.dynamicCommand = async (paramsHandler) => {
       await sendErrorReply(
         `Ocorreu um erro ao executar o comando ${command.name}! O desenvolvedor foi notificado!
       
-${Emoji.LIST} *Detalhes*: ${error.message}`
+📄 *Detalhes*: ${error.message}`
       );
     }
   }

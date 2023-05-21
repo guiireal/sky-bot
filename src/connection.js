@@ -4,7 +4,7 @@ const {
   useMultiFileAuthState,
 } = require("@whiskeysockets/baileys");
 
-async function connect() {
+exports.connect = async () => {
   const { state, saveCreds } = await useMultiFileAuthState(
     "./assets/auth/baileys"
   );
@@ -23,7 +23,7 @@ async function connect() {
         lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
       if (shouldReconnect) {
-        connect();
+        this.connect();
       }
     }
   });
@@ -31,6 +31,4 @@ async function connect() {
   bot.ev.on("creds.update", saveCreds);
 
   return bot;
-}
-
-module.exports = connect;
+};

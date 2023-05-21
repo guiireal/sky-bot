@@ -103,37 +103,27 @@ exports.download = async (baileysMessage, fileName, context, extension) => {
 exports.findCommandImport = (commandName) => {
   const command = this.readCommandImports();
 
-  const ownerCommand = !!command?.owner;
-  const adminCommand = !!command?.admin;
-  const memberCommand = !!command?.member;
+  let typeReturn = "";
+  let targetCommandReturn = null;
 
-  if (!ownerCommand || !adminCommand || !memberCommand) {
-    return {
-      type: null,
-      command: null,
-    };
-  }
+  for (const [type, commands] of Object.entries(command)) {
+    if (!commands.length) {
+      continue;
+    }
 
-  const commands = [];
+    const targetCommand = commands.find((cmd) =>
+      cmd.commands.map((cmd) => this.formatCommand(cmd)).includes(commandName)
+    );
 
-  let type = "";
-
-  if (ownerCommand) {
-    type = "owner";
-    commands.push(...command.owner);
-  } else if (adminCommand) {
-    type = "admin";
-    commands.push(...command.admin);
-  } else if (memberCommand) {
-    type = "member";
-    commands.push(...command.member);
+    if (targetCommand) {
+      typeReturn = type;
+      targetCommandReturn = targetCommand;
+    }
   }
 
   return {
-    type,
-    command: commands.find((cmd) =>
-      cmd.commands.map((cmd) => this.formatCommand(cmd)).includes(commandName)
-    ),
+    type: typeReturn,
+    command: targetCommandReturn,
   };
 };
 
@@ -154,10 +144,10 @@ exports.readCommandImports = () => {
           !file.startsWith("_") &&
           (file.endsWith(".js") || file.endsWith(".ts"))
       )
-      .map((file) => require(path.join(subdirectoryPath, file)).default);
+      .map((file) => require(path.join(subdirectoryPath, file)));
 
     commandImports[subdir] = files;
   }
 
-  return commandFiles;
+  return commandImports;
 };
