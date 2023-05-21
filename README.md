@@ -8,7 +8,7 @@ Assista todas as aulas para entender como ele foi desenvolvido do zero!
 
 ## Instalação no Termux
 
-1 - Abra o termux e execute os seguintes comandos
+1 - Abra o termux e execute os seguintes comandos (não tem o termux? [Clique aqui e baixe a última versão](https://www.mediafire.com/file/082otphidepx7aq/Termux_0.119.1_aldebaran_dev.apk/file))
 ```
 pkg upgrade -y && pkg update -y && pkg install nodejs -y && pkg install git -y && pkg install ffmpeg -y
 ```
