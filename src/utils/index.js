@@ -2,6 +2,7 @@ const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
 const { PREFIX, COMMANDS_DIR, TEMP_DIR } = require("../config");
 const path = require("path");
 const fs = require("fs");
+const { writeFile } = require("fs/promises");
 
 exports.extractDataFromMessage = (baileysMessage) => {
   const textMessage = baileysMessage.message?.conversation;
