@@ -4,6 +4,8 @@ Bot de WhatsApp, desenvolvido nas aulas da Saga [Desenvolvendo um Bot de WhatsAp
 
 Assista todas as aulas para entender como ele foi desenvolvido do zero!
 
+<br />
+
 ## Instalação no Termux
 
 1 - Abra o termux e execute os seguintes comandos
