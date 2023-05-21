@@ -37,3 +37,11 @@ cd sky-bot
 ```
 npm start
 ```
+
+## Para utilizar o GPT
+
+Edite a linha `12` do arquivo `./src/config.js` e cole sua OpenAI Api Key. Caso não saiba como obter sua api key, assista o [vídeo 07 da saga, construíndo um bot de WhatsApp do zero](https://www.youtube.com/watch?v=a3RNJ1DwN_E&t=352s)
+
+```js
+exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
+```
