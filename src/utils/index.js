@@ -1,5 +1,5 @@
 const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
-const { PREFIX, COMMANDS_DIR } = require("../config");
+const { PREFIX, COMMANDS_DIR, TEMP_DIR } = require("../config");
 const path = require("path");
 const fs = require("fs");
 
@@ -93,7 +93,7 @@ exports.download = async (baileysMessage, fileName, context, extension) => {
     buffer = Buffer.concat([buffer, chunk]);
   }
 
-  const filePath = path.resolve(TEMP_FOLDER, `${fileName}.${extension}`);
+  const filePath = path.resolve(TEMP_DIR, `${fileName}.${extension}`);
 
   await writeFile(filePath, buffer);
 
