@@ -18,7 +18,7 @@ pkg upgrade -y && pkg update -y && pkg install nodejs -y && pkg install git -y &
 termux-setup-storage
 ```
 
-3 - Entre na pasta storage
+3 - Entre na pasta storage (ou dê antes um `ls` e veja qual é o nome da pasta do seu cartão de memória e entre nela)
 ```
 cd storage
 ```
