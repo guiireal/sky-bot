@@ -1,6 +1,6 @@
 const { BOT_NAME, PREFIX } = require("../config");
 
-exports.waitMessage = () => "Carregando dados...";
+exports.waitMessage = "Carregando dados...";
 
 exports.menuMessage = () => {
   const date = new Date();
