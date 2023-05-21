@@ -7,6 +7,6 @@ module.exports = {
   commands: ["menu", "help"],
   usage: `${PREFIX}menu`,
   handle: async ({ sendReply }) => {
-    await sendReply(menuMessage());
+    await sendReply("\n\n" + menuMessage());
   },
 };
