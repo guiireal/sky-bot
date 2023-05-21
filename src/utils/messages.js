@@ -1,14 +1,14 @@
 const { BOT_EMOJI, BOT_NAME, PREFIX } = require("../config");
 
-function errorMessage(message) {
+exports.errorMessage = (message) => {
   return `${BOT_EMOJI} ❌ Erro! ${message}`;
-}
+};
 
-function warningMessage(message) {
+exports.warningMessage = (message) => {
   return `${BOT_EMOJI} ⚠ Atenção! ${message}`;
-}
+};
 
-function menuMessage() {
+exports.menuMessage = () => {
   const date = new Date();
 
   return `╭━━⪩ BEM VINDO! ⪨━━
@@ -29,10 +29,4 @@ function menuMessage() {
 ▢ • ${PREFIX}to-image
 ▢
 ╰━━─「🚀」─━━`;
-}
-
-module.exports = {
-  errorMessage,
-  menuMessage,
-  warningMessage,
 };

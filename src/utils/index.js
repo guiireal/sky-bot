@@ -1,9 +1,9 @@
-const { PREFIX, TEMP_FOLDER } = require("../config");
-const { downloadContentFromMessage } = require("@adiwajshing/baileys");
+const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
+const { PREFIX, COMMANDS_DIR } = require("../config");
 const path = require("path");
-const { writeFile } = require("fs/promises");
+const fs = require("fs");
 
-function extractDataFromMessage(baileysMessage) {
+exports.extractDataFromMessage = (baileysMessage) => {
   const textMessage = baileysMessage.message?.conversation;
   const extendedTextMessage = baileysMessage.message?.extendedTextMessage?.text;
   const imageTextMessage = baileysMessage.message?.imageMessage?.caption;
@@ -14,61 +14,72 @@ function extractDataFromMessage(baileysMessage) {
 
   if (!fullMessage) {
     return {
-      remoteJid: "",
-      fullMessage: "",
-      command: "",
-      args: "",
-      isImage: false,
-      isVideo: false,
-      isSticker: false,
+      remoteJid: null,
+      prefix: null,
+      commandName: null,
+      args: [],
     };
   }
 
-  const isImage = is(baileysMessage, "image");
-  const isVideo = is(baileysMessage, "video");
-  const isSticker = is(baileysMessage, "sticker");
+  const [command, ...args] = fullMessage.split(" ");
+  const prefix = command.charAt(0);
 
-  const [command, ...args] = fullMessage.trim().split(" ");
-
-  const arg = args.reduce((acc, arg) => acc + " " + arg, "").trim();
+  const commandWithoutPrefix = command.replace(new RegExp(`^[${PREFIX}]+`), "");
 
   return {
     remoteJid: baileysMessage?.key?.remoteJid,
-    fullMessage,
-    command: command.replace(PREFIX, "").trim(),
-    args: arg.trim(),
-    isImage,
-    isVideo,
-    isSticker,
+    prefix,
+    commandName: this.formatCommand(commandWithoutPrefix),
+    args: this.splitByCharacters(args.join(" "), ["\\", "|", "/"]),
   };
-}
+};
 
-function is(baileysMessage, context) {
+exports.splitByCharacters = (str, characters) => {
+  characters = characters.map((char) => (char === "\\" ? "\\\\" : char));
+  const regex = new RegExp(`[${characters.join("")}]`);
+
+  return str
+    .split(regex)
+    .map((str) => str.trim())
+    .filter(Boolean);
+};
+
+exports.formatCommand = (text) => {
+  return this.onlyLettersAndNumbers(
+    this.removeAccentsAndSpecialCharacters(text.toLocaleLowerCase().trim())
+  );
+};
+
+exports.onlyLettersAndNumbers = (text) => {
+  return text.replace(/[^a-zA-Z0-9]/g, "");
+};
+
+exports.removeAccentsAndSpecialCharacters = (text) => {
+  if (!text) return "";
+
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
+
+exports.baileysIs = (baileysMessage, context) => {
   return (
     !!baileysMessage.message?.[`${context}Message`] ||
     !!baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
       `${context}Message`
     ]
   );
-}
+};
 
-function getContent(baileysMessage, type) {
+exports.getContent = (baileysMessage, type) => {
   return (
     baileysMessage.message?.[`${type}Message`] ||
     baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
       `${type}Message`
     ]
   );
-}
+};
 
-function isCommand(baileysMessage) {
-  const { fullMessage } = extractDataFromMessage(baileysMessage);
-
-  return fullMessage && fullMessage.startsWith(PREFIX);
-}
-
-async function download(baileysMessage, fileName, context, extension) {
-  const content = getContent(baileysMessage, context);
+exports.download = async (baileysMessage, fileName, context, extension) => {
+  const content = this.getContent(baileysMessage, context);
 
   if (!content) {
     return null;
@@ -87,24 +98,66 @@ async function download(baileysMessage, fileName, context, extension) {
   await writeFile(filePath, buffer);
 
   return filePath;
-}
+};
 
-async function downloadImage(baileysMessage, fileName) {
-  return await download(baileysMessage, fileName, "image", "png");
-}
+exports.findCommandImport = (commandName) => {
+  const command = this.readCommandImports();
 
-async function downloadSticker(baileysMessage, fileName) {
-  return await download(baileysMessage, fileName, "sticker", "webp");
-}
+  const ownerCommand = !!command?.owner;
+  const adminCommand = !!command?.admin;
+  const memberCommand = !!command?.member;
 
-async function downloadVideo(baileysMessage, fileName) {
-  return await download(baileysMessage, fileName, "video", "mp4");
-}
+  if (!ownerCommand || !adminCommand || !memberCommand) {
+    return {
+      type: null,
+      command: null,
+    };
+  }
 
-module.exports = {
-  downloadImage,
-  downloadVideo,
-  downloadSticker,
-  extractDataFromMessage,
-  isCommand,
+  const commands = [];
+
+  let type = "";
+
+  if (ownerCommand) {
+    type = "owner";
+    commands.push(...command.owner);
+  } else if (adminCommand) {
+    type = "admin";
+    commands.push(...command.admin);
+  } else if (memberCommand) {
+    type = "member";
+    commands.push(...command.member);
+  }
+
+  return {
+    type,
+    command: commands.find((cmd) =>
+      cmd.commands.map((cmd) => this.formatCommand(cmd)).includes(commandName)
+    ),
+  };
+};
+
+exports.readCommandImports = () => {
+  const subdirectories = fs
+    .readdirSync(COMMANDS_DIR, { withFileTypes: true })
+    .filter((directory) => directory.isDirectory())
+    .map((directory) => directory.name);
+
+  const commandImports = {};
+
+  for (const subdir of subdirectories) {
+    const subdirectoryPath = path.join(COMMANDS_DIR, subdir);
+    const files = fs
+      .readdirSync(subdirectoryPath)
+      .filter(
+        (file) =>
+          !file.startsWith("_") &&
+          (file.endsWith(".js") || file.endsWith(".ts"))
+      )
+      .map((file) => require(path.join(subdirectoryPath, file)).default);
+
+    commandImports[subdir] = files;
+  }
+
+  return commandFiles;
 };

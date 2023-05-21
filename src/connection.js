@@ -2,7 +2,7 @@ const {
   default: makeWASocket,
   DisconnectReason,
   useMultiFileAuthState,
-} = require("@adiwajshing/baileys");
+} = require("@whiskeysockets/baileys");
 
 async function connect() {
   const { state, saveCreds } = await useMultiFileAuthState(

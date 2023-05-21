@@ -1,16 +1,12 @@
 const path = require("path");
 
-const PREFIX = "/";
-const BOT_EMOJI = "🤖";
-const BOT_NAME = "Super Bot";
-const TEMP_FOLDER = path.resolve(__dirname, "..", "assets", "temp");
+exports.PREFIX = "/";
+exports.BOT_EMOJI = "🤖";
+exports.BOT_NAME = "Sky Bot";
 
-const OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
+exports.COMMANDS_DIR = path.join(__dirname, "commands");
+exports.TEMP_DIR = path.resolve(__dirname, "..", "assets", "temp");
 
-module.exports = {
-  BOT_EMOJI,
-  BOT_NAME,
-  PREFIX,
-  TEMP_FOLDER,
-  OPENAI_API_KEY,
-};
+exports.TIMEOUT_IN_MILLISECONDS_BY_EVENT = 700;
+
+exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
