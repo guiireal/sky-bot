@@ -10,6 +10,9 @@ Bot de WhatsApp, desenvolvido nas aulas da [saga: desenvolvendo um bot de WhatsA
 
 Assista todas as aulas para entender como ele foi desenvolvido do zero!
 
+<a href="https://www.youtube.com/watch?v=GGm9zx_f8KA&list=PLO39CngmVGafypMifSUo7AueVU7P2_SEC" target="_blank"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"></a>
+
+
 ## Tecnologias Envolvidas
 
 - [Axios](https://axios-http.com/ptbr/docs/intro)
