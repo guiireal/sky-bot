@@ -6,7 +6,7 @@
 
 <br />
 
-Bot de WhatsApp, desenvolvido nas aulas da [saga desenvolvendo um bot de WhatsApp do zero](https://www.youtube.com/watch?v=GGm9zx_f8KA&list=PLO39CngmVGafypMifSUo7AueVU7P2_SEC).
+Bot de WhatsApp, desenvolvido nas aulas da [saga: desenvolvendo um bot de WhatsApp do zero](https://www.youtube.com/watch?v=GGm9zx_f8KA&list=PLO39CngmVGafypMifSUo7AueVU7P2_SEC).
 
 Assista todas as aulas para entender como ele foi desenvolvido do zero!
 
@@ -56,7 +56,7 @@ npm start
 
 ## Para utilizar o GPT
 
-Edite a linha `12` do arquivo `./src/config.js` e cole sua OpenAI Api Key. Caso não saiba como obter sua api key, assista o [vídeo 07 da saga desenvolvendo um bot de WhatsApp do zero](https://www.youtube.com/watch?v=a3RNJ1DwN_E&t=352s)
+Edite a linha `12` do arquivo `./src/config.js` e cole sua OpenAI Api Key. Caso não saiba como obter sua api key, assista o [vídeo 07 da saga: desenvolvendo um bot de WhatsApp do zero](https://www.youtube.com/watch?v=a3RNJ1DwN_E&t=352s)
 
 ```js
 exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
