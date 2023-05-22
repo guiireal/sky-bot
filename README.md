@@ -10,8 +10,6 @@ Bot de WhatsApp, desenvolvido nas aulas da Saga [Desenvolvendo um Bot de WhatsAp
 
 Assista todas as aulas para entender como ele foi desenvolvido do zero!
 
-<br />
-
 ## Tecnologias Envolvidas
 
 - [Axios](https://axios-http.com/ptbr/docs/intro)
@@ -47,6 +45,11 @@ cd sky-bot
 ```
 
 6 - Execute o bot e depois leia o QRCode
+```
+npm start
+```
+
+7 - Digite `CTRL + C` para parar o bot e rode novamente o seguinte comando
 ```
 npm start
 ```
