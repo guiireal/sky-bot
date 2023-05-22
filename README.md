@@ -18,6 +18,7 @@ Assista todas as aulas para entender como ele foi desenvolvido do zero!
 - [Axios](https://axios-http.com/ptbr/docs/intro)
 - [Baileys](https://github.com/WhiskeySockets/Baileys)
 - [FFMPEG](https://ffmpeg.org/)
+- [GPT OpenAI API](https://openai.com/blog/openai-api)
 - [Node.js](https://nodejs.org/en)
 
 ## Instalação no Termux
