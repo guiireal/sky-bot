@@ -23,37 +23,37 @@ Assista todas as aulas para entender como ele foi desenvolvido do zero!
 
 ## Instalação no Termux
 
-1 - Abra o termux e execute os seguintes comandos (não tem o termux? [Clique aqui e baixe a última versão](https://www.mediafire.com/file/082otphidepx7aq/Termux_0.119.1_aldebaran_dev.apk/file))
+1 - Abra o Termux e execute os seguintes comandos. (Não tem o Termux? [Clique aqui e baixe a última versão](https://www.mediafire.com/file/082otphidepx7aq/Termux_0.119.1_aldebaran_dev.apk/file))
 ```
 pkg upgrade -y && pkg update -y && pkg install nodejs -y && pkg install git -y && pkg install ffmpeg -y
 ```
 
-2 - Habilite o acesso da pasta storage, no termux
+2 - Habilite o acesso da pasta storage, no termux.
 ```
 termux-setup-storage
 ```
 
-3 - Entre na pasta storage (ou dê antes um `ls` e veja qual é o nome da pasta do seu cartão de memória e entre nela)
+3 - Entre na pasta storage (ou dê antes um `ls` e veja qual é o nome da pasta do seu cartão de memória e entre nela).
 ```
 cd storage
 ```
 
-4 - Clone o repositório
+4 - Clone o repositório.
 ```
 git clone https://github.com/guiireal/sky-bot
 ```
 
-5 - Entre na pasta que foi clonada
+5 - Entre na pasta que foi clonada.
 ```
 cd sky-bot
 ```
 
-6 - Execute o bot e depois leia o QRCode
+6 - Execute o bot e depois leia o QRCode.
 ```
 npm start
 ```
 
-7 - Digite `CTRL + C` para parar o bot e rode novamente o seguinte comando
+7 - Digite `CTRL + C` para parar o bot e rode novamente o seguinte comando.
 ```
 npm start
 ```
