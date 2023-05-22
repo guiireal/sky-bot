@@ -69,3 +69,7 @@ exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
 ## Exemplo do Menu
 
 <img src="./assets/images/menu.jpg" width="300">
+
+## Licença
+
+[MIT](https://github.com/guiireal/sky-bot/blob/main/LICENSE)
