@@ -1,10 +1,23 @@
 # SkyBot
 
+<div align="center">
+    <img src="./assets/images/skybot.jpeg" width="300">
+</div>
+
+<br />
+
 Bot de WhatsApp, desenvolvido nas aulas da Saga [Desenvolvendo um Bot de WhatsApp](https://www.youtube.com/watch?v=GGm9zx_f8KA&list=PLO39CngmVGafypMifSUo7AueVU7P2_SEC).
 
 Assista todas as aulas para entender como ele foi desenvolvido do zero!
 
 <br />
+
+## Tecnologias Envolvidas
+
+- [Axios](https://axios-http.com/ptbr/docs/intro)
+- [Baileys](https://github.com/WhiskeySockets/Baileys)
+- [FFMPEG](https://ffmpeg.org/)
+- [Node.js](https://nodejs.org/en)
 
 ## Instalação no Termux
 
@@ -45,3 +58,7 @@ Edite a linha `12` do arquivo `./src/config.js` e cole sua OpenAI Api Key. Caso 
 ```js
 exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
 ```
+
+## Exemplo do Menu
+
+<img src="./assets/images/menu.jpg" width="300">
