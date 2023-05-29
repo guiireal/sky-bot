@@ -25,7 +25,7 @@ Assista todas as aulas para entender como ele foi desenvolvido do zero!
 
 1 - Abra o Termux e execute os seguintes comandos. (Não tem o Termux? [Clique aqui e baixe a última versão](https://www.mediafire.com/file/082otphidepx7aq/Termux_0.119.1_aldebaran_dev.apk/file))
 ```
-pkg upgrade -y && pkg update -y && pkg install nodejs -y && pkg install git -y && pkg install ffmpeg -y
+pkg upgrade -y && pkg update -y && pkg install nodejs-lts -y && pkg install git -y && pkg install ffmpeg -y
 ```
 
 2 - Habilite o acesso da pasta storage, no termux.
@@ -53,7 +53,7 @@ cd sky-bot
 npm start
 ```
 
-7 - Digite `CTRL + C` para parar o bot e rode novamente o seguinte comando.
+7 - Após ler o QRCode, aguarde 10 segundos, depois digite `CTRL + C` para parar o bot e rode novamente o seguinte comando.
 ```
 npm start
 ```
