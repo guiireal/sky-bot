@@ -2,12 +2,15 @@ const { DangerError } = require("../errors/DangerError");
 const { InvalidParameterError } = require("../errors/InvalidParameterError");
 const { WarningError } = require("../errors/WarningError");
 const { findCommandImport } = require(".");
+const { verifyPrefix } = require("../middlewares/verifyPrefix");
+const { hasTypeOrCommand } = require("../middlewares/hasTypeOrCommand");
 
 exports.dynamicCommand = async (paramsHandler) => {
-  const { commandName, sendWarningReply, sendErrorReply } = paramsHandler;
+  const { commandName, prefix, sendWarningReply, sendErrorReply } =
+    paramsHandler;
   const { type, command } = findCommandImport(commandName);
 
-  if (!type || !command) {
+  if (!verifyPrefix(prefix) || !hasTypeOrCommand({ type, command })) {
     return;
   }
 
