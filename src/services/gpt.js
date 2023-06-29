@@ -2,10 +2,7 @@ const axios = require("axios");
 const { OPENAI_API_KEY } = require("../config");
 
 exports.gpt = async (content) => {
-  if (
-    !OPENAI_API_KEY ||
-    OPENAI_API_KEY === "coloque_aqui_seu_token_da_openai"
-  ) {
+  if (!OPENAI_API_KEY) {
     throw new Error(
       "É necessário configurar a variável de ambiente OPENAI_API_KEY com o seu token da OpenAI"
     );
