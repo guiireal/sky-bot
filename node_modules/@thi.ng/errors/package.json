@@ -1,0 +1,100 @@
+{
+  "name": "@thi.ng/errors",
+  "version": "2.3.5",
+  "description": "Custom error types and error factory functions",
+  "type": "module",
+  "module": "./index.js",
+  "typings": "./index.d.ts",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thi-ng/umbrella.git"
+  },
+  "homepage": "https://github.com/thi-ng/umbrella/tree/develop/packages/errors#readme",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/postspectacular"
+    },
+    {
+      "type": "patreon",
+      "url": "https://patreon.com/thing_umbrella"
+    }
+  ],
+  "author": "Karsten Schmidt (https://thi.ng)",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "yarn clean && tsc --declaration",
+    "clean": "rimraf --glob '*.js' '*.d.ts' '*.map' doc",
+    "doc": "typedoc --excludePrivate --excludeInternal --out doc src/index.ts",
+    "doc:ae": "mkdir -p .ae/doc .ae/temp && api-extractor run --local --verbose",
+    "doc:readme": "yarn doc:stats && tools:readme",
+    "doc:stats": "tools:module-stats",
+    "pub": "yarn npm publish --access public",
+    "test": "testament test"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.36.4",
+    "@thi.ng/testament": "^0.3.23",
+    "@types/node": "^20.5.6",
+    "rimraf": "^5.0.1",
+    "tools": "^0.0.1",
+    "typedoc": "^0.25.0",
+    "typescript": "^5.2.2"
+  },
+  "keywords": [
+    "assert",
+    "error",
+    "typescript"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "browser": {
+    "process": false,
+    "setTimeout": false
+  },
+  "engines": {
+    "node": ">=12.7"
+  },
+  "files": [
+    "./*.js",
+    "./*.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./assert": {
+      "default": "./assert.js"
+    },
+    "./deferror": {
+      "default": "./deferror.js"
+    },
+    "./ensure": {
+      "default": "./ensure.js"
+    },
+    "./illegal-arguments": {
+      "default": "./illegal-arguments.js"
+    },
+    "./illegal-arity": {
+      "default": "./illegal-arity.js"
+    },
+    "./illegal-state": {
+      "default": "./illegal-state.js"
+    },
+    "./io": {
+      "default": "./io.js"
+    },
+    "./out-of-bounds": {
+      "default": "./out-of-bounds.js"
+    },
+    "./unsupported": {
+      "default": "./unsupported.js"
+    }
+  },
+  "thi.ng": {
+    "year": 2018
+  },
+  "gitHead": "5929dd20497668496af13415cdf784a4d6f69aa3\n"
+}

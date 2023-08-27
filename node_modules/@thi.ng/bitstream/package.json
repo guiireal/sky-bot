@@ -1,0 +1,85 @@
+{
+  "name": "@thi.ng/bitstream",
+  "version": "2.2.28",
+  "description": "ES6 iterator based read/write bit streams with support for variable word widths",
+  "type": "module",
+  "module": "./index.js",
+  "typings": "./index.d.ts",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thi-ng/umbrella.git"
+  },
+  "homepage": "https://github.com/thi-ng/umbrella/tree/develop/packages/bitstream#readme",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/postspectacular"
+    },
+    {
+      "type": "patreon",
+      "url": "https://patreon.com/thing_umbrella"
+    }
+  ],
+  "author": "Karsten Schmidt (https://thi.ng)",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "yarn clean && tsc --declaration",
+    "clean": "rimraf --glob '*.js' '*.d.ts' '*.map' doc",
+    "doc": "typedoc --excludePrivate --excludeInternal --out doc src/index.ts",
+    "doc:ae": "mkdir -p .ae/doc .ae/temp && api-extractor run --local --verbose",
+    "doc:readme": "yarn doc:stats && tools:readme",
+    "doc:stats": "tools:module-stats",
+    "pub": "yarn npm publish --access public",
+    "test": "testament test"
+  },
+  "dependencies": {
+    "@thi.ng/errors": "^2.3.5"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.36.4",
+    "@thi.ng/testament": "^0.3.23",
+    "rimraf": "^5.0.1",
+    "tools": "^0.0.1",
+    "typedoc": "^0.25.0",
+    "typescript": "^5.2.2"
+  },
+  "keywords": [
+    "binary",
+    "datastructure",
+    "iterator",
+    "stream",
+    "typescript"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=12.7"
+  },
+  "files": [
+    "./*.js",
+    "./*.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./input": {
+      "default": "./input.js"
+    },
+    "./output": {
+      "default": "./output.js"
+    },
+    "./simple": {
+      "default": "./simple.js"
+    }
+  },
+  "thi.ng": {
+    "related": [
+      "range-coder",
+      "rle-pack"
+    ]
+  },
+  "gitHead": "5929dd20497668496af13415cdf784a4d6f69aa3\n"
+}
