@@ -4,6 +4,7 @@ const { WarningError } = require("../errors/WarningError");
 const { findCommandImport } = require(".");
 const { verifyPrefix } = require("../middlewares/verifyPrefix");
 const { hasTypeOrCommand } = require("../middlewares/hasTypeOrCommand");
+const { checkPermission } = require("../middlewares/checkPermission");
 
 exports.dynamicCommand = async (paramsHandler) => {
   const { commandName, prefix, sendWarningReply, sendErrorReply } =
@@ -11,6 +12,11 @@ exports.dynamicCommand = async (paramsHandler) => {
   const { type, command } = findCommandImport(commandName);
 
   if (!verifyPrefix(prefix) || !hasTypeOrCommand({ type, command })) {
+    return;
+  }
+
+  if (!(await checkPermission({ type, ...paramsHandler }))) {
+    await sendErrorReply("Você não tem permissão para executar este comando!");
     return;
   }
 

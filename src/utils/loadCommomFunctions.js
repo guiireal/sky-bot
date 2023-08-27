@@ -3,7 +3,7 @@ const { extractDataFromMessage, baileysIs, download } = require(".");
 const { waitMessage } = require("./messages");
 
 exports.loadCommomFunctions = ({ bot, baileysMessage }) => {
-  const { remoteJid, prefix, commandName, args } =
+  const { remoteJid, prefix, commandName, args, userJid, isReply, replyJid } =
     extractDataFromMessage(baileysMessage);
 
   const isImage = baileysIs(baileysMessage, "image");
@@ -75,12 +75,15 @@ exports.loadCommomFunctions = ({ bot, baileysMessage }) => {
   return {
     bot,
     remoteJid,
+    userJid,
     prefix,
     commandName,
     args,
+    isReply,
     isImage,
     isVideo,
     isSticker,
+    replyJid,
     baileysMessage,
     sendText,
     sendReply,

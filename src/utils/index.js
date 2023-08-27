@@ -6,21 +6,41 @@ const { writeFile } = require("fs/promises");
 
 exports.extractDataFromMessage = (baileysMessage) => {
   const textMessage = baileysMessage.message?.conversation;
-  const extendedTextMessage = baileysMessage.message?.extendedTextMessage?.text;
+  const extendedTextMessage = baileysMessage.message?.extendedTextMessage;
+  const extendedTextMessageText = extendedTextMessage?.text;
   const imageTextMessage = baileysMessage.message?.imageMessage?.caption;
   const videoTextMessage = baileysMessage.message?.videoMessage?.caption;
 
   const fullMessage =
-    textMessage || extendedTextMessage || imageTextMessage || videoTextMessage;
+    textMessage ||
+    extendedTextMessageText ||
+    imageTextMessage ||
+    videoTextMessage;
 
   if (!fullMessage) {
     return {
       remoteJid: null,
+      userJid: null,
       prefix: null,
       commandName: null,
+      isReply: false,
+      replyJid: null,
       args: [],
     };
   }
+
+  const isReply =
+    !!extendedTextMessage && !!extendedTextMessage.contextInfo?.quotedMessage;
+
+  const replyJid =
+    extendedTextMessage && extendedTextMessage.contextInfo?.participant
+      ? extendedTextMessage.contextInfo.participant
+      : null;
+
+  const userJid = baileysMessage?.key?.participant?.replace(
+    /:[0-9][0-9]|:[0-9]/g,
+    ""
+  );
 
   const [command, ...args] = fullMessage.split(" ");
   const prefix = command.charAt(0);
@@ -30,6 +50,9 @@ exports.extractDataFromMessage = (baileysMessage) => {
   return {
     remoteJid: baileysMessage?.key?.remoteJid,
     prefix,
+    userJid,
+    replyJid,
+    isReply,
     commandName: this.formatCommand(commandWithoutPrefix),
     args: this.splitByCharacters(args.join(" "), ["\\", "|", "/"]),
   };
@@ -152,3 +175,9 @@ exports.readCommandImports = () => {
 
   return commandImports;
 };
+
+const onlyNumbers = (text) => text.replace(/[^0-9]/g, "");
+
+exports.onlyNumbers = onlyNumbers;
+
+exports.toUserJid = (number) => `${onlyNumbers(number)}@s.whatsapp.net`;
