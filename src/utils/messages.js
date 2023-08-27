@@ -14,6 +14,12 @@ exports.menuMessage = () => {
 ▢
 ╰━━─「🪐」─━━
 
+╭━━⪩ ADMINS ⪨━━
+▢
+▢ • ${PREFIX}ban
+▢
+╰━━─「⭐」─━━
+
 ╭━━⪩ MENU ⪨━━
 ▢
 ▢ • ${PREFIX}cep
