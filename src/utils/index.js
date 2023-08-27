@@ -33,7 +33,7 @@ exports.extractDataFromMessage = (baileysMessage) => {
     !!extendedTextMessage && !!extendedTextMessage.contextInfo?.quotedMessage;
 
   const replyJid =
-    extendedTextMessage && extendedTextMessage.contextInfo?.participant
+    !!extendedTextMessage && !!extendedTextMessage.contextInfo?.participant
       ? extendedTextMessage.contextInfo.participant
       : null;
 
