@@ -14,9 +14,9 @@ module.exports = {
   }) => {
     await sendWaitReply();
 
-    await sendSuccessReact();
-
     const responseText = await gpt(args[0]);
+
+    await sendSuccessReact();
 
     await sendSuccessReply(responseText);
   },
