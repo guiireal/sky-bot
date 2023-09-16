@@ -64,12 +64,12 @@ exports.loadCommomFunctions = ({ bot, baileysMessage }) => {
 
   const sendStickerFromFile = async (file) =>
     await bot.sendMessage(remoteJid, {
-      sticker: { url: file },
+      sticker: file,
     });
 
   const sendImageFromFile = async (file) =>
     await bot.sendMessage(remoteJid, {
-      image: { url: file },
+      image: file,
     });
 
   return {
