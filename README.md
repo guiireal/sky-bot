@@ -1,4 +1,4 @@
-# SkyBot
+# Sky Bot
 
 <div align="center">
     <img src="./assets/images/skybot.jpeg" width="300">
