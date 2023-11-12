@@ -35,7 +35,7 @@ module.exports = {
 *IBGE*: ${data.ibge}`);
     } catch (error) {
       console.log(error);
-      throw new Error(error);
+      throw new Error(error.message);
     }
   },
 };
