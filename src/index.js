@@ -2,8 +2,9 @@ const { connect } = require("./connection");
 const { load } = require("./loader");
 
 async function start() {
-  const bot = await connect();
-  load(bot);
+  const socket = await connect();
+
+  load(socket);
 }
 
 start();

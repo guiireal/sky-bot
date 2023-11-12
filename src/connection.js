@@ -1,21 +1,43 @@
+const path = require("path");
+const { question, onlyNumbers } = require("./utils");
 const {
   default: makeWASocket,
   DisconnectReason,
   useMultiFileAuthState,
+  fetchLatestBaileysVersion,
 } = require("@whiskeysockets/baileys");
+
+const pino = require("pino");
 
 exports.connect = async () => {
   const { state, saveCreds } = await useMultiFileAuthState(
-    "./assets/auth/baileys"
+    path.resolve(__dirname, "..", "assets", "auth", "baileys")
   );
 
-  const bot = makeWASocket({
-    printQRInTerminal: true,
+  const { version } = await fetchLatestBaileysVersion();
+
+  const socket = makeWASocket({
+    printQRInTerminal: false,
+    version,
+    logger: pino({ level: "error" }),
     auth: state,
-    defaultQueryTimeoutMs: undefined,
+    browser: ["Chrome (Linux)", "", ""],
+    markOnlineOnConnect: true,
   });
 
-  bot.ev.on("connection.update", (update) => {
+  if (!socket.authState.creds.registered) {
+    const phoneNumber = await question("Informe o seu número de telefone: ");
+
+    if (!phoneNumber) {
+      throw new Error("Número de telefone inválido!");
+    }
+
+    const code = await socket.requestPairingCode(onlyNumbers(phoneNumber));
+
+    console.log(`Código de pareamento: ${code}`);
+  }
+
+  socket.ev.on("connection.update", (update) => {
     const { connection, lastDisconnect } = update;
 
     if (connection === "close") {
@@ -28,7 +50,7 @@ exports.connect = async () => {
     }
   });
 
-  bot.ev.on("creds.update", saveCreds);
+  socket.ev.on("creds.update", saveCreds);
 
-  return bot;
+  return socket;
 };

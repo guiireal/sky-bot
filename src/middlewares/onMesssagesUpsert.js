@@ -1,9 +1,9 @@
 const { dynamicCommand } = require("../utils/dynamicCommand");
 const { loadCommomFunctions } = require("../utils/loadCommomFunctions");
 
-exports.onMessagesUpsert = async ({ bot, messages }) => {
-  const baileysMessage = messages[0];
-  const commonFunctions = loadCommomFunctions({ bot, baileysMessage });
+exports.onMessagesUpsert = async ({ socket, messages }) => {
+  const webMessage = messages[0];
+  const commonFunctions = loadCommomFunctions({ socket, webMessage });
 
   await dynamicCommand(commonFunctions);
 };

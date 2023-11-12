@@ -2,7 +2,6 @@
 import { Boom } from '@hapi/boom';
 import { SocketConfig } from '../Types';
 import { BinaryNode } from '../WABinary';
-import { MobileSocketClient, WebSocketClient } from './Client';
 /**
  * Connects to WA servers and performs:
  * - simple queries (no retry mechanism, wait for connection establishment)
@@ -11,7 +10,7 @@ import { MobileSocketClient, WebSocketClient } from './Client';
  */
 export declare const makeSocket: (config: SocketConfig) => {
     type: "md";
-    ws: MobileSocketClient | WebSocketClient;
+    ws: any;
     ev: import("../Types").BaileysEventEmitter & {
         process(handler: (events: Partial<import("../Types").BaileysEventMap>) => void | Promise<void>): () => void;
         buffer(): void;

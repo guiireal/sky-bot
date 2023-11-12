@@ -101,7 +101,7 @@ export declare const makeRegistrationSocket: (config: SocketConfig) => {
     addMessageLabel: (jid: string, messageId: string, labelId: string) => Promise<void>;
     removeMessageLabel: (jid: string, messageId: string, labelId: string) => Promise<void>;
     type: "md";
-    ws: import("./Client/mobile-socket-client").MobileSocketClient | import("./Client/web-socket-client").WebSocketClient;
+    ws: any;
     ev: import("../Types").BaileysEventEmitter & {
         process(handler: (events: Partial<import("../Types").BaileysEventMap>) => void | Promise<void>): () => void;
         buffer(): void;

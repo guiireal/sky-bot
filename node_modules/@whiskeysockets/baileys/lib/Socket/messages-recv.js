@@ -300,6 +300,14 @@ const makeMessagesRecvSocket = (config) => {
                         }
                     });
                 }
+                else if (child.tag === 'blocklist') {
+                    const blocklists = (0, WABinary_1.getBinaryNodeChildren)(child, 'item');
+                    for (const { attrs } of blocklists) {
+                        const blocklist = [attrs.jid];
+                        const type = (attrs.action === 'block') ? 'add' : 'remove';
+                        ev.emit('blocklist.update', { blocklist, type });
+                    }
+                }
                 break;
             case 'link_code_companion_reg':
                 const linkCodeCompanionReg = (0, WABinary_1.getBinaryNodeChild)(node, 'link_code_companion_reg');

@@ -14,7 +14,7 @@ module.exports = {
     isVideo,
     downloadImage,
     downloadVideo,
-    baileysMessage,
+    webMessage,
     sendErrorReply,
     sendSuccessReact,
     sendStickerFromFile,
@@ -28,7 +28,7 @@ module.exports = {
     const outputPath = path.resolve(TEMP_DIR, "output.webp");
 
     if (isImage) {
-      const inputPath = await downloadImage(baileysMessage, "input");
+      const inputPath = await downloadImage(webMessage, "input");
 
       exec(
         `ffmpeg -i ${inputPath} -vf scale=512:512 ${outputPath}`,
@@ -48,13 +48,13 @@ module.exports = {
         }
       );
     } else {
-      const inputPath = await downloadVideo(baileysMessage, "input");
+      const inputPath = await downloadVideo(webMessage, "input");
 
       const sizeInSeconds = 10;
 
       const seconds =
-        baileysMessage.message?.videoMessage?.seconds ||
-        baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage
+        webMessage.message?.videoMessage?.seconds ||
+        webMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage
           ?.videoMessage?.seconds;
 
       const haveSecondsRule = seconds <= sizeInSeconds;

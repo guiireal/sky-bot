@@ -44,9 +44,8 @@ export declare const makeChatsSocket: (config: SocketConfig) => {
     removeChatLabel: (jid: string, labelId: string) => Promise<void>;
     addMessageLabel: (jid: string, messageId: string, labelId: string) => Promise<void>;
     removeMessageLabel: (jid: string, messageId: string, labelId: string) => Promise<void>;
-    /** sending abt props may fix QR scan fail if server expects */
     type: "md";
-    ws: import("./Client/mobile-socket-client").MobileSocketClient | import("./Client/web-socket-client").WebSocketClient;
+    ws: any;
     ev: import("../Types").BaileysEventEmitter & {
         process(handler: (events: Partial<import("../Types").BaileysEventMap>) => void | Promise<void>): () => void;
         buffer(): void;

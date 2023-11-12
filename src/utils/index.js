@@ -3,13 +3,23 @@ const { PREFIX, COMMANDS_DIR, TEMP_DIR } = require("../config");
 const path = require("path");
 const fs = require("fs");
 const { writeFile } = require("fs/promises");
+const readline = require("readline");
 
-exports.extractDataFromMessage = (baileysMessage) => {
-  const textMessage = baileysMessage.message?.conversation;
-  const extendedTextMessage = baileysMessage.message?.extendedTextMessage;
+exports.question = (message) => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) => rl.question(message, resolve));
+};
+
+exports.extractDataFromMessage = (webMessage) => {
+  const textMessage = webMessage.message?.conversation;
+  const extendedTextMessage = webMessage.message?.extendedTextMessage;
   const extendedTextMessageText = extendedTextMessage?.text;
-  const imageTextMessage = baileysMessage.message?.imageMessage?.caption;
-  const videoTextMessage = baileysMessage.message?.videoMessage?.caption;
+  const imageTextMessage = webMessage.message?.imageMessage?.caption;
+  const videoTextMessage = webMessage.message?.videoMessage?.caption;
 
   const fullMessage =
     textMessage ||
@@ -37,7 +47,7 @@ exports.extractDataFromMessage = (baileysMessage) => {
       ? extendedTextMessage.contextInfo.participant
       : null;
 
-  const userJid = baileysMessage?.key?.participant?.replace(
+  const userJid = webMessage?.key?.participant?.replace(
     /:[0-9][0-9]|:[0-9]/g,
     ""
   );
@@ -48,7 +58,7 @@ exports.extractDataFromMessage = (baileysMessage) => {
   const commandWithoutPrefix = command.replace(new RegExp(`^[${PREFIX}]+`), "");
 
   return {
-    remoteJid: baileysMessage?.key?.remoteJid,
+    remoteJid: webMessage?.key?.remoteJid,
     prefix,
     userJid,
     replyJid,
@@ -84,26 +94,26 @@ exports.removeAccentsAndSpecialCharacters = (text) => {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };
 
-exports.baileysIs = (baileysMessage, context) => {
+exports.baileysIs = (webMessage, context) => {
   return (
-    !!baileysMessage.message?.[`${context}Message`] ||
-    !!baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
+    !!webMessage.message?.[`${context}Message`] ||
+    !!webMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
       `${context}Message`
     ]
   );
 };
 
-exports.getContent = (baileysMessage, type) => {
+exports.getContent = (webMessage, type) => {
   return (
-    baileysMessage.message?.[`${type}Message`] ||
-    baileysMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
+    webMessage.message?.[`${type}Message`] ||
+    webMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
       `${type}Message`
     ]
   );
 };
 
-exports.download = async (baileysMessage, fileName, context, extension) => {
-  const content = this.getContent(baileysMessage, context);
+exports.download = async (webMessage, fileName, context, extension) => {
+  const content = this.getContent(webMessage, context);
 
   if (!content) {
     return null;

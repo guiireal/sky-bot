@@ -24,7 +24,7 @@ const makeSocket = (config) => {
     if (config.mobile && url.protocol !== 'tcp:') {
         url = new url_1.URL(`tcp://${Defaults_1.MOBILE_ENDPOINT}:${Defaults_1.MOBILE_PORT}`);
     }
-    const ws = config.mobile ? new Client_1.MobileSocketClient(url, config) : new Client_1.WebSocketClient(url, config);
+    const ws = config.socket ? config.socket : config.mobile ? new Client_1.MobileSocketClient(url, config) : new Client_1.WebSocketClient(url, config);
     ws.connect();
     const ev = (0, Utils_1.makeEventBuffer)(logger);
     /** ephemeral key pair used to encrypt/decrypt communication. Unique for each connection */

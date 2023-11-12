@@ -271,8 +271,9 @@ export declare const MEDIA_HKDF_KEY_MAPPING: {
     'md-app-state': string;
     'product-catalog-image': string;
     'payment-bg-image': string;
+    ptv: string;
 };
-export declare const MEDIA_KEYS: ("ppic" | "product" | "image" | "video" | "sticker" | "audio" | "gif" | "ptt" | "thumbnail-document" | "thumbnail-image" | "thumbnail-link" | "thumbnail-video" | "md-app-state" | "md-msg-hist" | "document" | "product-catalog-image" | "payment-bg-image")[];
+export declare const MEDIA_KEYS: ("ppic" | "product" | "image" | "video" | "sticker" | "audio" | "gif" | "ptt" | "thumbnail-document" | "thumbnail-image" | "thumbnail-link" | "thumbnail-video" | "md-app-state" | "md-msg-hist" | "document" | "product-catalog-image" | "payment-bg-image" | "ptv")[];
 export declare const MIN_PREKEY_COUNT = 5;
 export declare const INITIAL_PREKEY_COUNT = 30;
 export declare const DEFAULT_CACHE_TTLS: {

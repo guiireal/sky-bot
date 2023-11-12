@@ -1,46 +1,66 @@
 const { BOT_EMOJI } = require("../config");
 const { extractDataFromMessage, baileysIs, download } = require(".");
 const { waitMessage } = require("./messages");
+const fs = require("fs");
 
-exports.loadCommomFunctions = ({ bot, baileysMessage }) => {
+exports.loadCommomFunctions = ({ socket, webMessage }) => {
   const { remoteJid, prefix, commandName, args, userJid, isReply, replyJid } =
-    extractDataFromMessage(baileysMessage);
+    extractDataFromMessage(webMessage);
 
-  const isImage = baileysIs(baileysMessage, "image");
-  const isVideo = baileysIs(baileysMessage, "video");
-  const isSticker = baileysIs(baileysMessage, "sticker");
+  const isImage = baileysIs(webMessage, "image");
+  const isVideo = baileysIs(webMessage, "video");
+  const isSticker = baileysIs(webMessage, "sticker");
 
-  const downloadImage = async (baileysMessage, fileName) =>
-    await download(baileysMessage, fileName, "image", "png");
+  const downloadImage = async (webMessage, fileName) => {
+    return await download(webMessage, fileName, "image", "png");
+  };
 
-  const downloadSticker = async (baileysMessage, fileName) =>
-    await download(baileysMessage, fileName, "sticker", "webp");
+  const downloadSticker = async (webMessage, fileName) => {
+    return await download(webMessage, fileName, "sticker", "webp");
+  };
 
-  const downloadVideo = async (baileysMessage, fileName) =>
-    await download(baileysMessage, fileName, "video", "mp4");
+  const downloadVideo = async (webMessage, fileName) => {
+    return await download(webMessage, fileName, "video", "mp4");
+  };
 
-  const sendText = async (text) =>
-    await bot.sendMessage(remoteJid, { text: `${BOT_EMOJI} ${text}` });
+  const sendText = async (text) => {
+    return await socket.sendMessage(remoteJid, {
+      text: `${BOT_EMOJI} ${text}`,
+    });
+  };
 
-  const sendReply = async (text) =>
-    await bot.sendMessage(
+  const sendReply = async (text) => {
+    return await socket.sendMessage(
       remoteJid,
       { text: `${BOT_EMOJI} ${text}` },
-      { quoted: baileysMessage }
+      { quoted: webMessage }
     );
+  };
 
-  const sendReact = async (emoji) =>
-    await bot.sendMessage(remoteJid, {
+  const sendReact = async (emoji) => {
+    return await socket.sendMessage(remoteJid, {
       react: {
         text: emoji,
-        key: baileysMessage.key,
+        key: webMessage.key,
       },
     });
+  };
 
-  const sendSuccessReact = async () => await sendReact("✅");
-  const sendWaitReact = async () => await sendReact("⏳");
-  const sendWarningReact = async () => await sendReact("⚠️");
-  const sendErrorReact = async () => await sendReact("❌");
+  const sendSuccessReact = async () => {
+    return await sendReact("✅");
+  };
+
+  const sendWaitReact = async () => {
+    return await sendReact("⏳");
+  };
+
+  const sendWarningReact = async () => {
+    return await sendReact("⚠️");
+  };
+
+  const sendErrorReact = async () => {
+    return await sendReact("❌");
+  };
 
   const sendSuccessReply = async (text) => {
     await sendSuccessReact();
@@ -62,18 +82,20 @@ exports.loadCommomFunctions = ({ bot, baileysMessage }) => {
     return await sendReply(`❌ Erro! ${text}`);
   };
 
-  const sendStickerFromFile = async (file) =>
-    await bot.sendMessage(remoteJid, {
-      sticker: file,
+  const sendStickerFromFile = async (file) => {
+    return await socket.sendMessage(remoteJid, {
+      sticker: fs.readFileSync(file),
     });
+  };
 
-  const sendImageFromFile = async (file) =>
-    await bot.sendMessage(remoteJid, {
-      image: file,
+  const sendImageFromFile = async (file) => {
+    return await socket.sendMessage(remoteJid, {
+      image: file.readFileSync(file),
     });
+  };
 
   return {
-    bot,
+    socket,
     remoteJid,
     userJid,
     prefix,
@@ -84,7 +106,7 @@ exports.loadCommomFunctions = ({ bot, baileysMessage }) => {
     isVideo,
     isSticker,
     replyJid,
-    baileysMessage,
+    webMessage,
     sendText,
     sendReply,
     sendStickerFromFile,

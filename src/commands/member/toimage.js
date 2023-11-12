@@ -11,14 +11,14 @@ module.exports = {
   handle: async ({
     isSticker,
     downloadSticker,
-    baileysMessage,
+    webMessage,
     sendStickerFromFile,
   }) => {
     if (!isSticker) {
       throw new InvalidParameterError("Você preciissa enviar um sticker!");
     }
 
-    const inputPath = await downloadSticker(baileysMessage, "input");
+    const inputPath = await downloadSticker(webMessage, "input");
     const outputPath = path.resolve(TEMP_DIR, "output.png");
 
     exec(`ffmpeg -i ${inputPath} ${outputPath}`, async (error) => {

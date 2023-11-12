@@ -266,6 +266,7 @@ const extractGroupMetadata = (result) => {
     }
     const groupId = group.attrs.id.includes('@') ? group.attrs.id : (0, WABinary_1.jidEncode)(group.attrs.id, 'g.us');
     const eph = (_a = (0, WABinary_1.getBinaryNodeChild)(group, 'ephemeral')) === null || _a === void 0 ? void 0 : _a.attrs.expiration;
+    const memberAddMode = (0, WABinary_1.getBinaryNodeChildString)(group, 'member_add_mode') == "all_member_add";
     const metadata = {
         id: groupId,
         subject: group.attrs.subject,
@@ -278,6 +279,9 @@ const extractGroupMetadata = (result) => {
         descId,
         restrict: !!(0, WABinary_1.getBinaryNodeChild)(group, 'locked'),
         announce: !!(0, WABinary_1.getBinaryNodeChild)(group, 'announcement'),
+        isCommunity: !!(0, WABinary_1.getBinaryNodeChild)(group, 'parent'),
+        isCommunityAnnounce: !!(0, WABinary_1.getBinaryNodeChild)(group, 'default_sub_group'),
+        memberAddMode,
         participants: (0, WABinary_1.getBinaryNodeChildren)(group, 'participant').map(({ attrs }) => {
             return {
                 id: attrs.jid,

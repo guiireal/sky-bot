@@ -103,6 +103,7 @@ exports.MEDIA_HKDF_KEY_MAPPING = {
     'md-app-state': 'App State',
     'product-catalog-image': '',
     'payment-bg-image': 'Payment Background',
+    'ptv': 'Video'
 };
 exports.MEDIA_KEYS = Object.keys(exports.MEDIA_PATH_MAP);
 exports.MIN_PREKEY_COUNT = 5;
