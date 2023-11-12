@@ -12,10 +12,10 @@ module.exports = {
     isSticker,
     downloadSticker,
     webMessage,
-    sendStickerFromFile,
+    sendImageFromFile,
   }) => {
     if (!isSticker) {
-      throw new InvalidParameterError("Você preciissa enviar um sticker!");
+      throw new InvalidParameterError("Você precisa enviar uma figurinha!");
     }
 
     const inputPath = await downloadSticker(webMessage, "input");
@@ -27,7 +27,7 @@ module.exports = {
         throw new Error(error);
       }
 
-      await sendStickerFromFile(outputPath);
+      await sendImageFromFile(outputPath);
 
       fs.unlinkSync(inputPath);
       fs.unlinkSync(outputPath);

@@ -15,7 +15,7 @@ ${PREFIX}ban (mencionando uma mensagem)`,
   handle: async ({
     args,
     isReply,
-    bot,
+    socket,
     remoteJid,
     replyJid,
     sendReply,
@@ -45,7 +45,11 @@ ${PREFIX}ban (mencionando uma mensagem)`,
       throw new DangerError("Você não pode me remover!");
     }
 
-    await bot.groupParticipantsUpdate(remoteJid, [memberToRemoveJid], "remove");
+    await socket.groupParticipantsUpdate(
+      remoteJid,
+      [memberToRemoveJid],
+      "remove"
+    );
 
     await sendSuccessReact();
 
