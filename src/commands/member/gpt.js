@@ -10,9 +10,8 @@ module.exports = {
     const text = args[0];
 
     if (!text) {
-      return await sendErrorReply(
-        "Você precisa me dizer o que eu devo responder!"
-      );
+      await sendErrorReply("Você precisa me dizer o que eu devo responder!");
+      return;
     }
 
     await sendWaitReply();
