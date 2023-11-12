@@ -6,13 +6,7 @@ module.exports = {
   description: "Comandos de inteligência artificial!",
   commands: ["gpt", "skybot"],
   usage: `${PREFIX}gpt com quantos paus se faz uma canoa?`,
-  handle: async ({
-    sendSuccessReply,
-    sendErrorReply,
-    sendWaitReply,
-    sendSuccessReact,
-    args,
-  }) => {
+  handle: async ({ sendSuccessReply, sendErrorReply, sendWaitReply, args }) => {
     const text = args[0];
 
     if (!text) {
