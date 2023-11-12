@@ -7,6 +7,10 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
   const { remoteJid, prefix, commandName, args, userJid, isReply, replyJid } =
     extractDataFromMessage(webMessage);
 
+  if (!remoteJid) {
+    return;
+  }
+  
   const isImage = baileysIs(webMessage, "image");
   const isVideo = baileysIs(webMessage, "video");
   const isSticker = baileysIs(webMessage, "sticker");
