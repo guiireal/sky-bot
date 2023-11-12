@@ -1,9 +1,9 @@
-exports.checkPermission = async ({ type, bot, userJid, remoteJid }) => {
+exports.checkPermission = async ({ type, socket, userJid, remoteJid }) => {
   if (type === "member") {
     return true;
   }
 
-  const { participants, owner } = await bot.groupMetadata(remoteJid);
+  const { participants, owner } = await socket.groupMetadata(remoteJid);
 
   const participant = participants.find(
     (participant) => participant.id === userJid

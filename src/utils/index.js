@@ -95,19 +95,14 @@ exports.removeAccentsAndSpecialCharacters = (text) => {
 };
 
 exports.baileysIs = (webMessage, context) => {
-  return (
-    !!webMessage.message?.[`${context}Message`] ||
-    !!webMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-      `${context}Message`
-    ]
-  );
+  return !!this.getContent(webMessage, context);
 };
 
-exports.getContent = (webMessage, type) => {
+exports.getContent = (webMessage, context) => {
   return (
-    webMessage.message?.[`${type}Message`] ||
+    webMessage.message?.[`${context}Message`] ||
     webMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-      `${type}Message`
+      `${context}Message`
     ]
   );
 };
@@ -152,6 +147,7 @@ exports.findCommandImport = (commandName) => {
     if (targetCommand) {
       typeReturn = type;
       targetCommandReturn = targetCommand;
+      break;
     }
   }
 

@@ -17,7 +17,7 @@ module.exports = {
     }
 
     try {
-      const { data } = await consultarCep(cep);
+      const data = await consultarCep(cep);
 
       if (!data.cep) {
         await sendWarningReply("CEP não encontrado!");
