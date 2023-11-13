@@ -56,7 +56,7 @@ npm start
 
 ## Para utilizar o GPT
 
-Edite a linha `12` do arquivo `./src/config.js` e cole sua OpenAI Api Key. Caso não saiba como obter sua api key, assista o [vídeo 07 da saga: desenvolvendo um bot de WhatsApp do zero](https://www.youtube.com/watch?v=a3RNJ1DwN_E&t=352s)
+Edite a linha `12` do arquivo `./src/config.js` e cole sua OpenAI Api Key.
 
 ```js
 exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
@@ -69,3 +69,7 @@ exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
 ## Licença
 
 [MIT](https://github.com/guiireal/sky-bot/blob/main/LICENSE)
+
+## Disclaimer
+
+Neste projeto, precisei hospedar a node_modules, para auxiliar quem está rodando o bot pelo celular, pois muitos deles podem não rodar o `npm install` pelo termux corretamente.
