@@ -10,4 +10,4 @@ exports.TEMP_DIR = path.resolve(__dirname, "..", "assets", "temp");
 
 exports.TIMEOUT_IN_MILLISECONDS_BY_EVENT = 700;
 
-exports.OPENAI_API_KEY = "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";
+exports.OPENAI_API_KEY = "seu_token_aqui";
