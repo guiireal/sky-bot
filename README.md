@@ -75,3 +75,7 @@ exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
 ## Disclaimer
 
 Neste projeto, precisei hospedar a node_modules, para auxiliar quem está rodando o bot pelo celular, pois muitos deles podem não rodar o `npm install` pelo termux corretamente.
+
+## Inscreva-se no canal!
+
+<a href="https://www.youtube.com/@devgui_?sub_confirmation=1"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"></a>
