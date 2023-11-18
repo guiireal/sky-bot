@@ -62,7 +62,7 @@ npm start
 
 ## Para utilizar o GPT
 
-Edite a linha `12` do arquivo `./src/config.js` e cole sua OpenAI Api Key.
+Edite a linha `13` do arquivo `./src/config.js` e cole sua OpenAI Api Key.
 
 ```js
 exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
