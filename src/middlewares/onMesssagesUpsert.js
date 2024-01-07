@@ -9,5 +9,9 @@ exports.onMessagesUpsert = async ({ socket, messages }) => {
   const webMessage = messages[0];
   const commonFunctions = loadCommomFunctions({ socket, webMessage });
 
+  if (!commonFunctions) {
+    return;
+  }
+
   await dynamicCommand(commonFunctions);
 };
