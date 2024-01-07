@@ -10,7 +10,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
   if (!remoteJid) {
     return;
   }
-  
+
   const isImage = baileysIs(webMessage, "image");
   const isVideo = baileysIs(webMessage, "video");
   const isSticker = baileysIs(webMessage, "sticker");
@@ -94,7 +94,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
 
   const sendImageFromFile = async (file) => {
     return await socket.sendMessage(remoteJid, {
-      image: file.readFileSync(file),
+      image: fs.readFileSync(file),
     });
   };
 
