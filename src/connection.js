@@ -21,7 +21,7 @@ exports.connect = async () => {
     version,
     logger: pino({ level: "error" }),
     auth: state,
-    browser: ["Chrome (Linux)", "", ""],
+    browser: ["Ubuntu", "Chrome", "20.0.04"],
     markOnlineOnConnect: true,
   });
 
