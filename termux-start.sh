@@ -1,4 +1,1 @@
-pkg upgrade -y &&
-pkg update -y &&
-pkg install ffmpeg -y
-node ./src/index.js
+pkg upgrade -y && pkg update -y && pkg install ffmpeg -y && npm start
