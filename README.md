@@ -46,7 +46,7 @@ git clone https://github.com/guiireal/sky-bot
 cd sky-bot
 ```
 
-6 - Execute o bot
+6 - Execute o bot.
 ```
 ./termux-start.sh
 ```
