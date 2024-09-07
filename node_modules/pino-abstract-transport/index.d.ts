@@ -40,6 +40,12 @@ type BuildOptions = {
    * `metadata` If set to false, do not add metadata properties to the returned stream
    */
   metadata?: false;
+
+  /**
+   * `expectPinoConfig` If set to true, the transport will wait for pino to send its
+   * configuration before starting to process logs.
+   */
+  expectPinoConfig?: boolean;
 };
 
 /**
@@ -52,6 +58,17 @@ type EnablePipelining = BuildOptions & {
 
 /**
  * Create a split2 instance and returns it. This same instance is also passed
+ * to the given function, which is called after pino has sent its configuration.
+ *
+ * @returns {Promise<Transform>} the split2 instance
+ */
+declare function build(
+  fn: (transform: Transform & build.OnUnknown) => void | Promise<void>,
+  opts: BuildOptions & { expectPinoConfig: true }
+): Promise<Transform & build.OnUnknown>;
+
+/**
+ * Create a split2 instance and returns it. This same instance is also passed
  * to the given function, which is called synchronously.
  *
  * @returns {Transform} the split2 instance
@@ -60,6 +77,19 @@ declare function build(
   fn: (transform: Transform & build.OnUnknown) => void | Promise<void>,
   opts?: BuildOptions
 ): Transform & build.OnUnknown;
+
+/**
+ * Creates a split2 instance and passes it to the given function, which is called
+ * after pino has sent its configuration. Then wraps the split2 instance and
+ * the returned stream into a Duplex, so they can be concatenated into multiple
+ * transports.
+ *
+ * @returns {Promise<Transform>} the wrapped split2 instance
+ */
+declare function build(
+  fn: (transform: Transform & build.OnUnknown) => Transform & build.OnUnknown,
+  opts: EnablePipelining & { expectPinoConfig: true }
+): Promise<Transform>;
 
 /**
  * Creates a split2 instance and passes it to the given function, which is called

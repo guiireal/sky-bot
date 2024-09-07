@@ -1,6 +1,5 @@
-import { Store } from 'cache-manager';
 import { AuthenticationCreds } from '../Types';
-declare const makeCacheManagerAuthState: (store: Store, sessionKey: string) => Promise<{
+declare const makeCacheManagerAuthState: (store: Storage, sessionKey: string) => Promise<{
     clearState: () => Promise<void>;
     saveCreds: () => Promise<void>;
     state: {

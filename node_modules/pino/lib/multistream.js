@@ -1,16 +1,16 @@
 'use strict'
 
 const metadata = Symbol.for('pino.metadata')
-const { levels } = require('./levels')
+const { DEFAULT_LEVELS } = require('./constants')
 
-const DEFAULT_INFO_LEVEL = levels.info
+const DEFAULT_INFO_LEVEL = DEFAULT_LEVELS.info
 
 function multistream (streamsArray, opts) {
   let counter = 0
   streamsArray = streamsArray || []
   opts = opts || { dedupe: false }
 
-  const streamLevels = Object.create(levels)
+  const streamLevels = Object.create(DEFAULT_LEVELS)
   streamLevels.silent = Infinity
   if (opts.levels && typeof opts.levels === 'object') {
     Object.keys(opts.levels).forEach(i => {
@@ -21,6 +21,7 @@ function multistream (streamsArray, opts) {
   const res = {
     write,
     add,
+    emit,
     flushSync,
     end,
     minLevel: 0,
@@ -75,6 +76,14 @@ function multistream (streamsArray, opts) {
         }
       } else if (!opts.dedupe) {
         break
+      }
+    }
+  }
+
+  function emit (...args) {
+    for (const { stream } of this.streams) {
+      if (typeof stream.emit === 'function') {
+        stream.emit(...args)
       }
     }
   }
@@ -153,6 +162,7 @@ function multistream (streamsArray, opts) {
       minLevel: level,
       streams,
       clone,
+      emit,
       flushSync,
       [metadata]: true
     }

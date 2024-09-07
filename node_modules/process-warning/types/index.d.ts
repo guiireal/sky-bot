@@ -1,27 +1,37 @@
-type ProcessWarning = () => processWarning.Warning
-
 declare namespace processWarning {
-  export interface Warning {
-    create(name: string, code: string, message: string, opts?: ProcessWarningOptions): BuildWarnOptsFn,
-    emit(cod: string, a?: any, b?: any, c?: any): void,
-    emitted: Map<string, boolean>
+  export interface WarningItem {
+    (a?: any, b?: any, c?: any): void;
+    name: string;
+    code: string;
+    message: string;
+    emitted: boolean;
+    unlimited: boolean;
+    format(a?: any, b?: any, c?: any): string;
   }
 
-  export type BuildWarnOptsFn = (a?: any, b?: any, c?: any) => WarnOpts
+  export type WarningOptions = {
+    name: string;
+    code: string;
+    message: string;
+    unlimited?: boolean;
+  }
+
+  export type DeprecationOptions = Omit<WarningOptions, 'name'>
 
   export type ProcessWarningOptions = {
-    unlimited?: boolean,
+    unlimited?: boolean;
   }
 
-  export interface WarnOpts {
-    code: string;
-    name: string;
-    message: string;
+  export type ProcessWarning = {
+    createWarning(params: WarningOptions): WarningItem;
+    createDeprecation(params: DeprecationOptions): WarningItem;
   }
 
-  export const processWarning: ProcessWarning
-  export { processWarning as default }
+  export function createWarning(params: WarningOptions): WarningItem;
+  export function createDeprecation(params: DeprecationOptions): WarningItem;
+
+  const processWarning: ProcessWarning;
+  export { processWarning as default };
 }
 
-declare function processWarning(...params: Parameters<ProcessWarning>): ReturnType<ProcessWarning>
-export = processWarning
+export = processWarning;

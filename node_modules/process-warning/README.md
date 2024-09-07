@@ -7,7 +7,7 @@
 A small utility for generating consistent warning objects across your codebase.
 It also exposes a utility for emitting those warnings, guaranteeing that they are issued only once (unless configured otherwise).
 
-This module is used by the [Fastify](https://fastify.io) framework and it was called `fastify-warning` prior to version 1.0.0.
+_This module is used by the [Fastify](https://fastify.io) framework and it was called `fastify-warning` prior to version 1.0.0._
 
 ### Install
 
@@ -17,15 +17,26 @@ npm i process-warning
 
 ### Usage
 
-The module exports a builder function that returns a utility for creating warnings and emitting them.
+The module exports two builder functions for creating warnings.
 
 ```js
-const warning = require('process-warning')()
+const {
+  createWarning,
+  createDeprecation
+} = require('process-warning')
+
+const warning = createWarning({
+  name: 'ExampleWarning',
+  code: 'EXP_WRN_001',
+  message: 'Hello %s',
+  unlimited: true
+})
+warning('world')
 ```
 
 #### Methods
 
-##### `warning.create(name, code, message[, options])`
+##### `createWarning({ name, code, message[, unlimited] })`
 
 - `name` (`string`, required) - The error name, you can access it later with
 `error.name`. For consistency, we recommend prefixing module error names
@@ -41,51 +52,53 @@ properties:
   once? Defaults to `false`.
 
 
-##### `warning.createDeprecation(code, message[, options])`
+##### `createDeprecation({code, message[, options]})`
 
-This is a wrapper for `warning.create`. It is equivalent to invoking
-`warning.create` with the `name` parameter set to "DeprecationWarning".
+This is a wrapper for `createWarning`. It is equivalent to invoking
+`createWarning` with the `name` parameter set to "DeprecationWarning".
 
 Deprecation warnings have extended support for the Node.js CLI options:
 `--throw-deprecation`, `--no-deprecation`, and `--trace-deprecation`.
 
-##### `warning.emit(code [, a [, b [, c]]])`
+##### `warning([, a [, b [, c]]])`
 
-The utility also contains an `emit` function that you can use for emitting the
-warnings you have previously created by passing their respective code.
+The returned `warning` function can used for emitting warnings.
 A warning is guaranteed to be emitted at least once.
 
-- `code` (`string`, required) - The warning code you intend to emit.
 - `[, a [, b [, c]]]` (`any`, optional) - Parameters for string interpolation.
 
 ```js
-const warning = require('process-warning')()
-warning.create('FastifyWarning', 'FST_ERROR_CODE', 'message')
-warning.emit('FST_ERROR_CODE')
+const { createWarning } = require('process-warning')
+const FST_ERROR_CODE = createWarning({ name: 'MyAppWarning', code: 'FST_ERROR_CODE', message: 'message' })
+FST_ERROR_CODE()
 ```
 
 How to use an interpolated string:
 ```js
-const warning = require('process-warning')()
-warning.create('FastifyWarning', 'FST_ERROR_CODE', 'Hello %s')
-warning.emit('FST_ERROR_CODE', 'world')
+const { createWarning } = require('process-warning')
+const FST_ERROR_CODE = createWarning({ name: 'MyAppWarning', code: 'FST_ERROR_CODE', message: 'Hello %s'})
+FST_ERROR_CODE('world')
 ```
 
-The module also exports an `warning.emitted` [Map](https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Map), which contains all the warnings already emitted. Useful for testing.
+The `warning` object has methods and properties for managing the warning's state. Useful for testing.
 ```js
-const warning = require('process-warning')()
-warning.create('FastifyWarning', 'FST_ERROR_CODE', 'Hello %s')
-console.log(warning.emitted.get('FST_ERROR_CODE')) // false
-warning.emit('FST_ERROR_CODE', 'world')
-console.log(warning.emitted.get('FST_ERROR_CODE')) // true
+const { createWarning } = require('process-warning')
+const FST_ERROR_CODE = createWarning({ name: 'MyAppWarning', code: 'FST_ERROR_CODE', message: 'Hello %s'})
+console.log(FST_ERROR_CODE.emitted) // false
+FST_ERROR_CODE('world')
+console.log(FST_ERROR_CODE.emitted) // true
+
+const FST_ERROR_CODE_2 = createWarning('MyAppWarning', 'FST_ERROR_CODE_2', 'Hello %s')
+FST_ERROR_CODE_2.emitted = true
+FST_ERROR_CODE_2('world') // will not be emitted because it is not unlimited
 ```
 
 How to use an unlimited warning:
 ```js
-const warning = require('process-warning')()
-warning.create('FastifyWarning', 'FST_ERROR_CODE', 'Hello %s', { unlimited: true })
-warning.emit('FST_ERROR_CODE', 'world') // will be emitted
-warning.emit('FST_ERROR_CODE', 'world') // will be emitted again
+const { createWarning } = require('process-warning')
+const FST_ERROR_CODE = createWarning({ name: 'MyAppWarning', code: 'FST_ERROR_CODE', message: 'Hello %s', unlimited: true })
+FST_ERROR_CODE('world') // will be emitted
+FST_ERROR_CODE('world') // will be emitted again
 ```
 
 #### Suppressing warnings

@@ -1,8 +1,8 @@
 {
-  "name": "libsignal",
+  "name": "@whiskeysockets/libsignal-node",
   "version": "2.0.1",
   "description": "Open Whisper Systems' libsignal for Node.js",
-  "repository": "ForstaLabs/libsignal-node",
+  "repository": "WhiskeySockets/libsignal-node",
   "main": "index.js",
   "keywords": [
     "signal",

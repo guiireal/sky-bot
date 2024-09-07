@@ -38,4 +38,4 @@ export declare function hkdf(buffer: Uint8Array | Buffer, expandedLength: number
     salt?: Buffer;
     info?: string;
 }): Buffer;
-export declare function derivePairingCodeKey(pairingCode: string, salt: Buffer): Buffer;
+export declare function derivePairingCodeKey(pairingCode: string, salt: Buffer): Promise<Buffer>;

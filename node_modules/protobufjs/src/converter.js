@@ -18,13 +18,21 @@ var Enum = require("./enum"),
  * @ignore
  */
 function genValuePartial_fromObject(gen, field, fieldIndex, prop) {
+    var defaultAlreadyEmitted = false;
     /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
     if (field.resolvedType) {
         if (field.resolvedType instanceof Enum) { gen
             ("switch(d%s){", prop);
             for (var values = field.resolvedType.values, keys = Object.keys(values), i = 0; i < keys.length; ++i) {
-                if (field.repeated && values[keys[i]] === field.typeDefault) gen
-                ("default:");
+                // enum unknown values passthrough
+                if (values[keys[i]] === field.typeDefault && !defaultAlreadyEmitted) { gen
+                    ("default:")
+                        ("if(typeof(d%s)===\"number\"){m%s=d%s;break}", prop, prop, prop);
+                    if (!field.repeated) gen // fallback to default value only for
+                                             // arrays, to avoid leaving holes.
+                        ("break");           // for non-repeated fields, just ignore
+                    defaultAlreadyEmitted = true;
+                }
                 gen
                 ("case%j:", keys[i])
                 ("case %i:", values[keys[i]])
@@ -54,7 +62,7 @@ function genValuePartial_fromObject(gen, field, fieldIndex, prop) {
                 break;
             case "uint64":
                 isUnsigned = true;
-                // eslint-disable-line no-fallthrough
+                // eslint-disable-next-line no-fallthrough
             case "int64":
             case "sint64":
             case "fixed64":
@@ -71,7 +79,7 @@ function genValuePartial_fromObject(gen, field, fieldIndex, prop) {
             case "bytes": gen
                 ("if(typeof d%s===\"string\")", prop)
                     ("util.base64.decode(d%s,m%s=util.newBuffer(util.base64.length(d%s)),0)", prop, prop, prop)
-                ("else if(d%s.length)", prop)
+                ("else if(d%s.length >= 0)", prop)
                     ("m%s=d%s", prop, prop);
                 break;
             case "string": gen
@@ -156,7 +164,7 @@ function genValuePartial_toObject(gen, field, fieldIndex, prop) {
     /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
     if (field.resolvedType) {
         if (field.resolvedType instanceof Enum) gen
-            ("d%s=o.enums===String?types[%i].values[m%s]:m%s", prop, fieldIndex, prop, prop);
+            ("d%s=o.enums===String?(types[%i].values[m%s]===undefined?m%s:types[%i].values[m%s]):m%s", prop, fieldIndex, prop, prop, fieldIndex, prop, prop);
         else gen
             ("d%s=types[%i].toObject(m%s,o)", prop, fieldIndex, prop);
     } else {
@@ -168,7 +176,7 @@ function genValuePartial_toObject(gen, field, fieldIndex, prop) {
                 break;
             case "uint64":
                 isUnsigned = true;
-                // eslint-disable-line no-fallthrough
+                // eslint-disable-next-line no-fallthrough
             case "int64":
             case "sint64":
             case "fixed64":

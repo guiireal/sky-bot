@@ -1,17 +1,36 @@
 import { expectType } from 'tsd'
-import Warinig, { BuildWarnOptsFn, WarnOpts } from '..'
+import { createWarning, createDeprecation } from '..'
 
-const warning = Warinig()
-const buildWarnOpts = warning.create('FastifyWarning', 'CODE', 'message')
-expectType<BuildWarnOptsFn>(buildWarnOpts)
-const opts = buildWarnOpts()
-expectType<WarnOpts>(opts)
-expectType<string>(opts.code)
-expectType<string>(opts.message)
-expectType<string>(opts.name)
+const WarnInstance = createWarning({
+  name: 'TypeScriptWarning',
+  code: 'CODE',
+  message: 'message'
+})
 
-expectType<void>(warning.emit('CODE'))
-expectType<Map<string, boolean>>(warning.emitted)
+expectType<string>(WarnInstance.code)
+expectType<string>(WarnInstance.message)
+expectType<string>(WarnInstance.name)
+expectType<boolean>(WarnInstance.emitted)
+expectType<boolean>(WarnInstance.unlimited)
 
-const buildWarnUnlimited = warning.create('FastifyWarning', 'CODE', 'message', { unlimited: true })
-expectType<BuildWarnOptsFn>(buildWarnUnlimited)
+expectType<void>(WarnInstance())
+expectType<void>(WarnInstance('foo'))
+expectType<void>(WarnInstance('foo', 'bar'))
+
+const buildWarnUnlimited = createWarning({
+  name: 'TypeScriptWarning',
+  code: 'CODE',
+  message: 'message',
+  unlimited: true
+})
+expectType<boolean>(buildWarnUnlimited.unlimited)
+
+const DeprecationInstance = createDeprecation({
+  code: 'CODE',
+  message: 'message'
+})
+expectType<string>(DeprecationInstance.code)
+
+DeprecationInstance()
+DeprecationInstance('foo')
+DeprecationInstance('foo', 'bar')

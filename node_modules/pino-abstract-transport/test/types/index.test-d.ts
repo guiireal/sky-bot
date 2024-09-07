@@ -10,10 +10,20 @@ import { Transform } from "stream";
 expectType<Transform>(build((source) => source, { enablePipelining: true }));
 
 /**
+ * If expectPinoConfig is set with enablePipelining, build returns a promise
+ */
+expectType<(Promise<Transform>)>(build((source) => source, { enablePipelining: true, expectPinoConfig: true }));
+
+/**
  * If enablePipelining is not set the unknown event can be listened to on
  * the returned stream.
  */
 expectType<Transform & OnUnknown>(build((source) => {}));
+
+/**
+ * If expectPinoConfig is set, build returns a promise
+ */
+expectType<(Promise<Transform & OnUnknown>)>(build((source) => {}, { expectPinoConfig: true }));
 
 /**
  * build also accepts an async function

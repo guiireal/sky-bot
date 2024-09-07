@@ -3,156 +3,122 @@
 const { format } = require('node:util')
 
 /**
- * An object that provides methods for creating process warning, emitting them,
- * and inspecting/managing the emission state of warning.
- *
- * @typedef {object} ProcessWarningManager
+ * @namespace processWarning
  */
 
 /**
- * @typedef {object} CreateOptions
- * @property {boolean} [unlimited=false] Indicates if the warning should be
- * emitted every time (`true`) or only the first time (`false`).
+ * Represents a warning item with details.
+ * @typedef {Function} WarningItem
+ * @param {*} [a] Possible message interpolation value.
+ * @param {*} [b] Possible message interpolation value.
+ * @param {*} [c] Possible message interpolation value.
+ * @property {string} name - The name of the warning.
+ * @property {string} code - The code associated with the warning.
+ * @property {string} message - The warning message.
+ * @property {boolean} emitted - Indicates if the warning has been emitted.
+ * @property {function} format - Formats the warning message.
  */
 
 /**
- * An error instance representing a process warning. This is what will be
- * emitted to listeners when the warning is emitted.
- *
- * @typedef {Error} ProcessWarning
- * @property {string} code
- * @property {string} name
- * @property {string} message
+ * Options for creating a process warning.
+ * @typedef {Object} ProcessWarningOptions
+ * @property {string} name - The name of the warning.
+ * @property {string} code - The code associated with the warning.
+ * @property {string} message - The warning message.
+ * @property {boolean} [unlimited=false] - If true, allows unlimited emissions of the warning.
  */
 
 /**
- * A function used to create new {@link ProcessWarning} instances.
- *
- * @callback ProcessWarningBuilder
- * @param {*} [param1] First possible string interpolation value.
- * @param {*} [param2] Second possible string interpolation value.
- * @param {*} [param3] Third possible string interpolation value.
- * @returns ProcessWarning
+ * Represents the process warning functionality.
+ * @typedef {Object} ProcessWarning
+ * @property {function} createWarning - Creates a warning item.
+ * @property {function} createDeprecation - Creates a deprecation warning item.
  */
 
 /**
- * Factory that builds a new {@link ProcessWarningManager} and returns it.
- *
- * @returns ProcessWarningManager
+ * Creates a deprecation warning item.
+ * @function
+ * @memberof processWarning
+ * @param {ProcessWarningOptions} params - Options for creating the warning.
+ * @returns {WarningItem} The created deprecation warning item.
  */
-function processWarning () {
-  const codes = {}
-  const emitted = new Map()
-  const opts = Object.create(null)
+function createDeprecation (params) {
+  return createWarning({ ...params, name: 'DeprecationWarning' })
+}
 
-  /**
-   * Builds a new {@link ProcessWarning} and adds it to the
-   * {@link ProcessWarningManager} such that it can be emitted through the
-   * {@link ProcessWarningManager#emit} method.
-   *
-   * @memberof! ProcessWarningManager
-   * @instance
-   *
-   * @param {string} name Warning name, e.g. `'MyCustomWarning'`.
-   * @param {string} code A unique code for the warning, e.g. `'WARN_001'`.
-   * @param {string} message The body of the warning.
-   * @param {CreateOptions} [options]
-   * @returns {ProcessWarningBuilder}
-   */
-  function create (name, code, message, { unlimited = false } = {}) {
-    if (!name) throw new Error('Warning name must not be empty')
-    if (!code) throw new Error('Warning code must not be empty')
-    if (!message) throw new Error('Warning message must not be empty')
-    if (typeof unlimited !== 'boolean') throw new Error('Warning opts.unlimited must be a boolean')
+/**
+ * Creates a warning item.
+ * @function
+ * @memberof processWarning
+ * @param {ProcessWarningOptions} params - Options for creating the warning.
+ * @returns {WarningItem} The created warning item.
+ * @throws {Error} Throws an error if name, code, or message is empty, or if opts.unlimited is not a boolean.
+ */
+function createWarning ({ name, code, message, unlimited = false } = {}) {
+  if (!name) throw new Error('Warning name must not be empty')
+  if (!code) throw new Error('Warning code must not be empty')
+  if (!message) throw new Error('Warning message must not be empty')
+  if (typeof unlimited !== 'boolean') throw new Error('Warning opts.unlimited must be a boolean')
 
-    code = code.toUpperCase()
+  code = code.toUpperCase()
 
-    if (codes[code] !== undefined) {
-      throw new Error(`The code '${code}' already exist`)
-    }
-
-    function buildWarnOpts (a, b, c) {
-      // more performant than spread (...) operator
-      let formatted
-      if (a && b && c) {
-        formatted = format(message, a, b, c)
-      } else if (a && b) {
-        formatted = format(message, a, b)
-      } else if (a) {
-        formatted = format(message, a)
-      } else {
-        formatted = message
+  let warningContainer = {
+    [name]: function (a, b, c) {
+      if (warning.emitted === true && warning.unlimited !== true) {
+        return
       }
-
-      return {
-        code,
-        name,
-        message: formatted
+      warning.emitted = true
+      process.emitWarning(warning.format(a, b, c), warning.name, warning.code)
+    }
+  }
+  if (unlimited) {
+    warningContainer = {
+      [name]: function (a, b, c) {
+        warning.emitted = true
+        process.emitWarning(warning.format(a, b, c), warning.name, warning.code)
       }
     }
-
-    Object.assign(opts, { unlimited })
-    emitted.set(code, unlimited)
-    codes[code] = buildWarnOpts
-
-    return codes[code]
   }
 
-  /**
-   * A wrapper for {@link ProcessWarningManager#create} that builds a new
-   * deprecation warning. This method is equivalent to passing
-   * `name = 'DeprecationWarning'` to the create method.
-   *
-   * Deprecation warnings have extended support for the Node.js CLI options:
-   * `--throw-deprecation`, `--no-deprecation`, and `--trace-deprecation`.
-   *
-   * @memberof! ProcessWarningManager
-   * @instance
-   *
-   * @param {string} code
-   * @param {string} message
-   * @param {CreateOptions} opts
-   * @returns {ProcessWarningBuilder}
-   */
-  function createDeprecation (code, message, opts = {}) {
-    return create('DeprecationWarning', code, message, opts)
-  }
+  const warning = warningContainer[name]
+
+  warning.emitted = false
+  warning.message = message
+  warning.unlimited = unlimited
+  warning.code = code
 
   /**
-   * Emits a registered warning associated with the given `code`. If the
-   * warning message has interpolation strings present, up to the first three
-   * of them can be supplied values with the optional interpolation value
-   * parameters.
-   *
-   * If a warning is set to `unlimited: false`, and has already been emitted
-   * once, invoking this method is a no-operation.
-   *
-   * @memberof! ProcessWarningManager
-   * @instance
-   *
-   * @param {string} code The code for the error to emit, e.g. `'WARN_001'`.
-   * This is the same code that was provided to {@link ProcessWarningManager#create}.
+   * Formats the warning message.
    * @param {*} [a] Possible message interpolation value.
    * @param {*} [b] Possible message interpolation value.
    * @param {*} [c] Possible message interpolation value.
+   * @returns {string} The formatted warning message.
    */
-  function emit (code, a, b, c) {
-    if (emitted.get(code) === true && opts.unlimited === false) return
-    if (codes[code] === undefined) throw new Error(`The code '${code}' does not exist`)
-    emitted.set(code, true)
-
-    const warning = codes[code](a, b, c)
-    process.emitWarning(warning.message, warning.name, warning.code)
+  warning.format = function (a, b, c) {
+    let formatted
+    if (a && b && c) {
+      formatted = format(message, a, b, c)
+    } else if (a && b) {
+      formatted = format(message, a, b)
+    } else if (a) {
+      formatted = format(message, a)
+    } else {
+      formatted = message
+    }
+    return formatted
   }
 
-  return {
-    create,
-    createDeprecation,
-    emit,
-    emitted
-  }
+  return warning
 }
 
-module.exports = processWarning
-module.exports.default = processWarning
-module.exports.processWarning = processWarning
+/**
+ * Module exports containing the process warning functionality.
+ * @namespace
+ * @property {function} createWarning - Creates a warning item.
+ * @property {function} createDeprecation - Creates a deprecation warning item.
+ * @property {ProcessWarning} processWarning - Represents the process warning functionality.
+ */
+const out = { createWarning, createDeprecation }
+module.exports = out
+module.exports.default = out
+module.exports.processWarning = out

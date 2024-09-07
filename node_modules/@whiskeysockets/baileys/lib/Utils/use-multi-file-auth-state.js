@@ -1,11 +1,21 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useMultiFileAuthState = void 0;
+const async_lock_1 = __importDefault(require("async-lock"));
 const promises_1 = require("fs/promises");
 const path_1 = require("path");
 const WAProto_1 = require("../../WAProto");
 const auth_utils_1 = require("./auth-utils");
 const generics_1 = require("./generics");
+// We need to lock files due to the fact that we are using async functions to read and write files
+// https://github.com/WhiskeySockets/Baileys/issues/794
+// https://github.com/nodejs/node/issues/26338
+// Default pending is 1000, set it to infinity
+// https://github.com/rogierschouten/async-lock/issues/63
+const fileLock = new async_lock_1.default({ maxPending: Infinity });
 /**
  * stores the full authentication state in a single folder.
  * Far more efficient than singlefileauthstate
@@ -15,11 +25,13 @@ const generics_1 = require("./generics");
  * */
 const useMultiFileAuthState = async (folder) => {
     const writeData = (data, file) => {
-        return (0, promises_1.writeFile)((0, path_1.join)(folder, fixFileName(file)), JSON.stringify(data, generics_1.BufferJSON.replacer));
+        const filePath = (0, path_1.join)(folder, fixFileName(file));
+        return fileLock.acquire(filePath, () => (0, promises_1.writeFile)((0, path_1.join)(filePath), JSON.stringify(data, generics_1.BufferJSON.replacer)));
     };
     const readData = async (file) => {
         try {
-            const data = await (0, promises_1.readFile)((0, path_1.join)(folder, fixFileName(file)), { encoding: 'utf-8' });
+            const filePath = (0, path_1.join)(folder, fixFileName(file));
+            const data = await fileLock.acquire(filePath, () => (0, promises_1.readFile)(filePath, { encoding: 'utf-8' }));
             return JSON.parse(data, generics_1.BufferJSON.reviver);
         }
         catch (error) {
@@ -28,7 +40,8 @@ const useMultiFileAuthState = async (folder) => {
     };
     const removeData = async (file) => {
         try {
-            await (0, promises_1.unlink)((0, path_1.join)(folder, fixFileName(file)));
+            const filePath = (0, path_1.join)(folder, fixFileName(file));
+            await fileLock.acquire(filePath, () => (0, promises_1.unlink)(filePath));
         }
         catch (_a) {
         }

@@ -26,4 +26,5 @@ __exportStar(require("./Types"), exports);
 __exportStar(require("./Store"), exports);
 __exportStar(require("./Defaults"), exports);
 __exportStar(require("./WABinary"), exports);
+__exportStar(require("./WAM"), exports);
 exports.default = Socket_1.default;

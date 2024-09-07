@@ -30,7 +30,9 @@ exports.derivePairingCodeKey = exports.hkdf = exports.md5 = exports.sha256 = exp
 const crypto_1 = require("crypto");
 const futoin_hkdf_1 = __importDefault(require("futoin-hkdf"));
 const libsignal = __importStar(require("libsignal"));
+const util_1 = require("util");
 const Defaults_1 = require("../Defaults");
+const pbkdf2Promise = (0, util_1.promisify)(crypto_1.pbkdf2);
 /** prefix version byte to the pub keys, required for some curve crypto functions */
 const generateSignalPubKey = (pubKey) => (pubKey.length === 33
     ? pubKey
@@ -145,7 +147,7 @@ function hkdf(buffer, expandedLength, info) {
     return (0, futoin_hkdf_1.default)(!Buffer.isBuffer(buffer) ? Buffer.from(buffer) : buffer, expandedLength, info);
 }
 exports.hkdf = hkdf;
-function derivePairingCodeKey(pairingCode, salt) {
-    return (0, crypto_1.pbkdf2Sync)(pairingCode, salt, 2 << 16, 32, 'sha256');
+async function derivePairingCodeKey(pairingCode, salt) {
+    return await pbkdf2Promise(pairingCode, salt, 2 << 16, 32, 'sha256');
 }
 exports.derivePairingCodeKey = derivePairingCodeKey;

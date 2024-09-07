@@ -1,5 +1,5 @@
 
-import decodeAudio, {decoders} from './audio-decode.js';
+import decodeAudio, { decoders } from './audio-decode.js';
 import wav from 'audio-lena/wav.js';
 import mp3 from 'audio-lena/mp3.js';
 import ogg from 'audio-lena/ogg.js';
@@ -85,15 +85,23 @@ t('malformed data', async t => {
 	let log = []
 	try {
 		let x = await decodeAudio(new Float32Array(10))
-	} catch (e) { log.push('arr')}
+	} catch (e) { log.push('arr') }
 
 	try {
 		let x = await decodeAudio(null)
-	} catch (e) { log.push('null')}
+	} catch (e) { log.push('null') }
 
 	try {
 		let x = await decodeAudio(Promise.resolve())
-	} catch (e) { log.push('nonbuf')}
+	} catch (e) { log.push('nonbuf') }
 
 	is(log, ['arr', 'null', 'nonbuf'])
+})
+
+t.skip('sequence #38', async t => {
+	let flacBuffer = await decoders.flac(new Uint8Array(flac))
+	is(flacBuffer.duration | 0, 12, 'flac duration')
+
+	let mp3Buffer = await decoders.mp3(new Uint8Array(mp3))
+	is(mp3Buffer.duration | 0, 12, 'mp3 duration')
 })

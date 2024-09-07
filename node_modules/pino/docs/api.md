@@ -13,7 +13,8 @@
   * [logger.fatal()](#fatal)
   * [logger.silent()](#silent)
   * [logger.child()](#child)
-  * [logger.bindings()](#bindings)
+  * [logger.bindings()](#logger-bindings)
+  * [logger.setBindings()](#logger-set-bindings)
   * [logger.flush()](#flush)
   * [logger.level](#logger-level)
   * [logger.isLevelEnabled()](#islevelenabled)
@@ -65,6 +66,32 @@ Additional levels can be added to the instance via the `customLevels` option.
 * See [`customLevels` option](#opt-customlevels)
 
 <a id=opt-customlevels></a>
+
+#### `levelComparison` ("ASC", "DESC", Function)
+
+Default: `ASC`
+
+Use this option to customize levels order.
+In order to be able to define custom levels ordering pass a function which will accept `current` and `expected` values and return `boolean` which shows should `current` level to be shown or not.
+
+```js
+const logger = pino({
+  levelComparison: 'DESC',
+  customLevels: {
+    foo: 20, // `foo` is more valuable than `bar`
+    bar: 10
+  },
+})
+
+// OR
+
+const logger = pino({
+  levelComparison: function(current, expected) {
+    return current >= expected;
+  }
+})
+```
+
 #### `customLevels` (Object)
 
 Default: `undefined`
@@ -575,13 +602,15 @@ parent.child(bindings)
 
 
 <a id="destination"></a>
-### `destination` (SonicBoom | WritableStream | String | Object)
+### `destination` (Number | String | Object | DestinationStream | SonicBoomOpts | WritableStream)
 
 Default: `pino.destination(1)` (STDOUT)
 
-The `destination` parameter, at a minimum must be an object with a `write` method.
-An ordinary Node.js `stream` can be passed as the destination (such as the result
-of `fs.createWriteStream`) but for peak log writing performance it is strongly
+The `destination` parameter can be a file descriptor, a file path, or an
+object with `dest` property pointing to a fd or path.
+An ordinary Node.js `stream` file descriptor can be passed as the
+destination (such as the result 
+of `fs.createWriteStream`) but for peak log writing performance, it is strongly
 recommended to use `pino.destination` to create the destination stream.
 Note that the `destination` parameter can be the result of `pino.transport()`.
 
@@ -860,6 +889,7 @@ The log level of a child is mutable. It can be set independently
 of the parent either by setting the [`level`](#level) accessor after creating
 the child logger or using the [`options.level`](#optionslevel-string) key.
 
+<a id="logger-child-bindings"></a>
 #### `bindings` (Object)
 
 An object of key-value pairs to include in every log line output
@@ -950,7 +980,7 @@ child.info({test: 'will be overwritten'})
 * See [`serializers` option](#opt-serializers)
 * See [pino.stdSerializers](#pino-stdSerializers)
 
-<a id="bindings"></a>
+<a id="logger-bindings"></a>
 ### `logger.bindings()`
 
 Returns an object containing all the current bindings, cloned from the ones passed in via `logger.child()`.
@@ -962,6 +992,16 @@ const anotherChild = child.child({ MIX: { IN: 'always' } })
 console.log(anotherChild.bindings())
 // { foo: 'bar', MIX: { IN: 'always' } }
 ```
+
+<a id="logger-set-bindings"></a>
+### `logger.setBindings(bindings)`
+
+Adds to the bindings of this logger instance.
+
+**Note:** Does not overwrite bindings. Can potentially result in duplicate keys in
+log lines.
+
+* See [`bindings` parameter in `logger.child`](#logger-child-bindings)     
 
 <a id="flush"></a>
 ### `logger.flush([cb])`
@@ -1234,7 +1274,7 @@ For more on transports, how they work, and how to create them see the [`Transpor
 #### Options
 
 * `target`:  The transport to pass logs through. This may be an installed module name or an absolute path.
-* `options`:  An options object which is serialized (see [Structured Clone Algorithm][https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm]), passed to the worker thread, parsed and then passed to the exported transport function.
+* `options`:  An options object which is serialized (see [Structured Clone Algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)), passed to the worker thread, parsed and then passed to the exported transport function.
 * `worker`: [Worker thread](https://nodejs.org/api/worker_threads.html#worker_threads_new_worker_filename_options) configuration options. Additionally, the `worker` option supports `worker.autoEnd`. If this is set to `false` logs will not be flushed on process exit. It is then up to the developer to call `transport.end()` to flush logs.
 * `targets`: May be specified instead of `target`. Must be an array of transport configurations. Transport configurations include the aforementioned `options` and `target` options plus a `level` option which will send only logs above a specified level to a transport.
 * `pipeline`: May be specified instead of `target`. Must be an array of transport configurations. Transport configurations include the aforementioned `options` and `target` options. All intermediate steps in the pipeline _must_ be `Transform` streams and not `Writable`.

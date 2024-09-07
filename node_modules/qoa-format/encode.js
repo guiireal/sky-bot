@@ -71,6 +71,22 @@ function qoa_encode_frame(stream, audio, lmses, sample_offset, frame_len) {
   // write current LMS weights and history state
   for (let c = 0; c < channels; c++) {
     const lms = lmses[c];
+
+    /* If the weights have grown too large, reset them to 0. This may happen
+		with certain high-frequency sounds. This is a last resort and will 
+		introduce quite a bit of noise, but should at least prevent pops/clicks */
+    const weights_sum =
+      lms.weights[0] * lms.weights[0] +
+      lms.weights[1] * lms.weights[1] +
+      lms.weights[2] * lms.weights[2] +
+      lms.weights[3] * lms.weights[3];
+    if (weights_sum > 0x2fffffff) {
+      lms.weights[0] = 0;
+      lms.weights[1] = 0;
+      lms.weights[2] = 0;
+      lms.weights[3] = 0;
+    }
+
     for (let i = 0; i < QOA_LMS_LEN; i++) {
       stream.write(lms.history[i], 16);
     }

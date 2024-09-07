@@ -1,7 +1,11 @@
 'use strict'
 
-const warning = require('..')()
+const { createWarning } = require('..')
 
-warning.create('DeprecationWarning', 'CUSTDEP001', 'This is a deprecation warning')
+const CUSTDEP001 = createWarning({
+  name: 'DeprecationWarning',
+  code: 'CUSTDEP001',
+  message: 'This is a deprecation warning'
+})
 
-warning.emit('CUSTDEP001')
+CUSTDEP001()
