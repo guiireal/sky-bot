@@ -23,7 +23,7 @@ Bot de WhatsApp multi funções, desenvolvido no vídeo:
 
 1 - Abra o Termux e execute os seguintes comandos. (Não tem o Termux? [Clique aqui e baixe a última versão](https://www.mediafire.com/file/082otphidepx7aq/Termux_0.119.1_aldebaran_dev.apk/file))
 ```
-pkg upgrade -y && pkg update -y && pkg install nodejs-lts -y && pkg install git -y && pkg install ffmpeg -y
+pkg upgrade -y && pkg update -y && pkg install git -y
 ```
 
 2 - Habilite o acesso da pasta storage, no termux.
@@ -46,9 +46,9 @@ git clone https://github.com/guiireal/sky-bot
 cd sky-bot
 ```
 
-6 - Execute o bot e depois leia o QRCode.
+6 - Execute o bot
 ```
-npm start
+./termux-start.sh
 ```
 
 7 - Insira o número de telefone e pressione `enter`.
