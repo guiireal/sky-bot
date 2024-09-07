@@ -21,7 +21,7 @@ Bot de WhatsApp multi funções, desenvolvido no vídeo:
 
 ## Instalação no Termux
 
-1 - Abra o Termux e execute os seguintes comandos. (Não tem o Termux? [Clique aqui e baixe a última versão](https://www.mediafire.com/file/082otphidepx7aq/Termux_0.119.1_aldebaran_dev.apk/file))
+1 - Abra o Termux e execute os seguintes comandos. Não tem o Termux? [Clique aqui e baixe a última versão](https://www.mediafire.com/file/082otphidepx7aq/Termux_0.119.1_aldebaran_dev.apk/file)
 ```
 pkg upgrade -y && pkg update -y && pkg install git -y
 ```
