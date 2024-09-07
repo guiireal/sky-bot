@@ -1,9 +1,9 @@
 const path = require("path");
 
-exports.PREFIX = "/";
+exports.PREFIX = "/"; // Prefixo dos comandos
 exports.BOT_EMOJI = "🤖";
-exports.BOT_NAME = "Sky Bot";
-exports.BOT_NUMBER = "5511974096005";
+exports.BOT_NAME = "Sky Bot"; // Nome do bot (mude se preferir)
+exports.BOT_NUMBER = "5511920202020"; // Número do bot (mude se preferir)
 
 exports.COMMANDS_DIR = path.join(__dirname, "commands");
 exports.TEMP_DIR = path.resolve(__dirname, "..", "assets", "temp");
