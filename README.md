@@ -70,7 +70,7 @@ exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
 
 ## Exemplo do menu
 
-<img src="./assets/images/menu.jpg" width="300">
+<img src="./assets/images/menu.png" width="300">
 
 ## Inscreva-se no canal!
 

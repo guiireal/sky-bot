@@ -18,6 +18,6 @@ exports.TIMEOUT_IN_MILLISECONDS_BY_EVENT = 700;
 exports.SPIDER_API_BASE_URL = "https://api.spiderx.com.br/api";
 
 // Obtenha seu token, criando uma conta em: https://api.spiderx.com.br
-exports.SPIDER_API_TOKEN = "seu_token_aqui";
+exports.SPIDER_API_TOKEN = "jAnpys5LWZfGoLRsmu24";
 
 exports.OPENAI_API_KEY = "seu_token_aqui";
