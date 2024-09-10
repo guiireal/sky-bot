@@ -98,6 +98,17 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
     });
   };
 
+  const sendAudioFromURL = async (url) => {
+    return await socket.sendMessage(
+      remoteJid,
+      {
+        audio: { url },
+        mimetype: "audio/mp4",
+      },
+      { url }
+    );
+  };
+
   return {
     socket,
     remoteJid,
@@ -115,6 +126,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
     sendReply,
     sendStickerFromFile,
     sendImageFromFile,
+    sendAudioFromURL,
     sendReact,
     sendSuccessReact,
     sendWaitReact,

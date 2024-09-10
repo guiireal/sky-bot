@@ -25,6 +25,7 @@ exports.menuMessage = () => {
 ▢ • ${PREFIX}cep
 ▢ • ${PREFIX}gpt
 ▢ • ${PREFIX}ping
+▢ • ${PREFIX}play-audio
 ▢ • ${PREFIX}sticker
 ▢ • ${PREFIX}to-image
 ▢
