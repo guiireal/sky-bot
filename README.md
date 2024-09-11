@@ -53,7 +53,7 @@ cd sky-bot
 
 7 - Insira o número de telefone e pressione `enter`.
 
-8 - Informe o código que aparece no termux, no seu WhatsApp, [assista aqui, caso não encontre essa oppção](https://youtu.be/6zr2NYIYIyc?t=5395).
+8 - Informe o código que aparece no termux, no seu WhatsApp, [assista aqui, caso não encontre essa opção](https://youtu.be/6zr2NYIYIyc?t=5395).
 
 9 - Aguarde 10 segundos, depois digite `CTRL + C` para parar o bot e rode novamente o seguinte comando.
 ```
