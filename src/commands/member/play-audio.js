@@ -32,6 +32,7 @@ module.exports = {
 
       await sendAudioFromURL(data.url);
     } catch (error) {
+      console.log(error);
       await sendErrorReply(error.message);
     }
   },
