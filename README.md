@@ -48,7 +48,7 @@ cd sky-bot
 
 6 - Execute o bot.
 ```
-./termux-start.sh
+sh termux-start.sh
 ```
 
 7 - Insira o número de telefone e pressione `enter`.
