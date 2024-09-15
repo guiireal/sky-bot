@@ -1,5 +1,5 @@
 const { PREFIX } = require("../../config");
-const { gpt } = require("../../services/gpt");
+const { gpt } = require("../../services/spider-x-api");
 
 module.exports = {
   name: "gpt",

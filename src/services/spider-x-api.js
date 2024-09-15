@@ -20,8 +20,8 @@ exports.playAudio = async (search) => {
   return data;
 };
 
-exports.gpt = async (content) => {
-  if (!content) {
+exports.gpt = async (text) => {
+  if (!text) {
     throw new Error("Você precisa informar o parâmetro de texto!");
   }
 
@@ -32,7 +32,7 @@ exports.gpt = async (content) => {
   const { data } = await axios.post(
     `${SPIDER_API_BASE_URL}/gpt?api_key=${SPIDER_API_TOKEN}`,
     {
-      text: content,
+      text,
     }
   );
 
