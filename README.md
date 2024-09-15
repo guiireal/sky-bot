@@ -62,10 +62,11 @@ npm start
 
 ## Para utilizar o GPT
 
-Edite a linha `13` do arquivo `./src/config.js` e cole sua OpenAI Api Key.
+Edite a linha `21` do arquivo `./src/config.js` e cole sua API Key da Spider X API
+Para obter seu token, acesse: [https://api.spiderx.com.br](https://api.spiderx.com.br) e crie sua conta gratuitamente!
 
 ```js
-exports.OPENAI_API_KEY = "coloque_aqui_seu_token_da_openai";
+exports.SPIDER_API_TOKEN = "seu_token_aqui";
 ```
 
 ## Exemplo do menu
