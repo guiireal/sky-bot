@@ -26,6 +26,9 @@ exports.connect = async () => {
   });
 
   if (!socket.authState.creds.registered) {
+    console.log(
+      "INFO => Informe o seu número de telefone (exemplo: 5511920202020):"
+    );
     const phoneNumber = await question("Informe o seu número de telefone: ");
 
     if (!phoneNumber) {
