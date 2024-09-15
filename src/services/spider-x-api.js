@@ -19,3 +19,22 @@ exports.playAudio = async (search) => {
 
   return data;
 };
+
+exports.gpt = async (content) => {
+  if (!content) {
+    throw new Error("Você precisa informar o parâmetro de texto!");
+  }
+
+  if (!SPIDER_API_TOKEN || SPIDER_API_TOKEN === "seu_token_aqui") {
+    throw new Error("Token da API do Spider X não configurado");
+  }
+
+  const { data } = await axios.post(
+    `${SPIDER_API_BASE_URL}/gpt?api_key=${SPIDER_API_TOKEN}`,
+    {
+      text: content,
+    }
+  );
+
+  return data.text;
+};
