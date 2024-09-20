@@ -4,6 +4,12 @@
     <img src="./assets/images/skybot.jpeg" width="300">
 </div>
 
+<div align="center">
+    <a href="https://github.com/Projetos-Crescer/zig-app">
+        <img alt="Version" src="https://img.shields.io/badge/Vers%C3%A3o-1.0.0-blue">
+    </a>
+</div>
+
 <br />
 
 Bot de WhatsApp multi funções, desenvolvido no vídeo:
