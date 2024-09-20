@@ -8,6 +8,8 @@ const {
 } = require("@whiskeysockets/baileys");
 
 const pino = require("pino");
+const { BOT_NAME } = require("./config");
+const { Formatter } = require("@loggings/beta");
 
 exports.connect = async () => {
   const { state, saveCreds } = await useMultiFileAuthState(
@@ -26,30 +28,35 @@ exports.connect = async () => {
   });
 
   if (!socket.authState.creds.registered) {
-    console.log(
-      "INFO => Informe o seu número de telefone (exemplo: 5511920202020):"
-    );
-    const phoneNumber = await question("Informe o seu número de telefone: ");
+    console.log(`Credenciais ainda [não configuradas].yellow!.`);
+    console.log("Informe o seu [número de telefone].green (exemplo: [5511920202020].lime):");
+
+    const phoneNumber = await question(Formatter("Informe o seu [número de telefone].green: ")[0]);
 
     if (!phoneNumber) {
-      throw new Error("Número de telefone inválido!");
+      throw new Error("Número de telefone [inválido].red!");
     }
 
     const code = await socket.requestPairingCode(onlyNumbers(phoneNumber));
 
-    console.log(`Código de pareamento: ${code}`);
+    console.log(`Código de pareamento: [${code}].cyan`);
   }
 
   socket.ev.on("connection.update", (update) => {
     const { connection, lastDisconnect } = update;
 
     if (connection === "close") {
+
       const shouldReconnect =
         lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
       if (shouldReconnect) {
+        console.log("Bot [desconectado].red., [reconectando...].cyan")
         this.connect();
       }
+    }
+    if (connection === "open") {
+      console.log("Bot conectado com [sucesso].green.")
     }
   });
 

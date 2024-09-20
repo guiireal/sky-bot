@@ -12,7 +12,7 @@ exports.playAudio = async (search) => {
   }
 
   const { data } = await axios.get(
-    `${SPIDER_API_BASE_URL}/play-audio?search=${encodeURIComponent(
+    `${SPIDER_API_BASE_URL}/downloads/play-audio?search=${encodeURIComponent(
       search
     )}&api_key=${SPIDER_API_TOKEN}`
   );
@@ -30,11 +30,11 @@ exports.gpt = async (text) => {
   }
 
   const { data } = await axios.post(
-    `${SPIDER_API_BASE_URL}/gpt?api_key=${SPIDER_API_TOKEN}`,
+    `${SPIDER_API_BASE_URL}/ai?api_key=${SPIDER_API_TOKEN}`,
     {
       text,
     }
   );
 
-  return data.text;
+  return data.response;
 };
