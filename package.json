@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@loggings/beta": "^2.0.0",
     "@whiskeysockets/baileys": "github:WhiskeySockets/Baileys",
     "axios": "^1.6.1",
     "correios-brasil": "^3.0.6",
