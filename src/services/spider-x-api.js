@@ -30,7 +30,7 @@ exports.gpt = async (text) => {
   }
 
   const { data } = await axios.post(
-    `${SPIDER_API_BASE_URL}/ai?api_key=${SPIDER_API_TOKEN}`,
+    `${SPIDER_API_BASE_URL}/ai/gpt?api_key=${SPIDER_API_TOKEN}`,
     {
       text,
     }
