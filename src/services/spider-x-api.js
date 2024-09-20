@@ -36,5 +36,5 @@ exports.gpt = async (text) => {
     }
   );
 
-  return data.text;
+  return data.response;
 };
