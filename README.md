@@ -87,7 +87,7 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 | Figurinha de texto animada | ✔ | Membro |
 | GPT | ✔ | Membro |
 | Ping | ✔ | Membro |
-| Play Áudio | ✔ | Membro |
+| Play áudio | ✔ | Membro |
 | Sticker | ✔ | Membro |
 | Sticker para imagem | ✔ | Membro |
 
