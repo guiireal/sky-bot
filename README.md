@@ -24,8 +24,8 @@ Bot de WhatsApp multi funções, desenvolvido no vídeo:
 - [Axios](https://axios-http.com/ptbr/docs/intro)
 - [Baileys](https://github.com/WhiskeySockets/Baileys)
 - [FFMPEG](https://ffmpeg.org/)
-- [Spider X API](https://api.spiderx.com.br)
 - [Node.js](https://nodejs.org/en)
+- [Spider X API](https://api.spiderx.com.br)
 
 ## Instalação no Termux
 
