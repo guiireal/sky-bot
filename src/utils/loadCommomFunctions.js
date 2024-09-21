@@ -92,6 +92,16 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
     });
   };
 
+  const sendStickerFromURL = async (url) => {
+    return await socket.sendMessage(
+      remoteJid,
+      {
+        sticker: { url },
+      },
+      { url }
+    );
+  };
+
   const sendImageFromFile = async (file) => {
     return await socket.sendMessage(remoteJid, {
       image: fs.readFileSync(file),
@@ -134,6 +144,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
     sendErrorReply,
     sendSuccessReply,
     sendWaitReply,
+    sendStickerFromURL,
     sendWarningReply,
     sendErrorReact,
     downloadImage,

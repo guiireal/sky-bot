@@ -22,6 +22,7 @@ exports.menuMessage = () => {
 
 ╭━━⪩ MENU ⪨━━
 ▢
+▢ • ${PREFIX}attp
 ▢ • ${PREFIX}cep
 ▢ • ${PREFIX}gpt
 ▢ • ${PREFIX}ping

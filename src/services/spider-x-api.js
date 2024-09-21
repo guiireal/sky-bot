@@ -38,3 +38,17 @@ exports.gpt = async (text) => {
 
   return data.response;
 };
+
+exports.attp = async (text) => {
+  if (!text) {
+    throw new Error("Você precisa informar o parâmetro de texto!");
+  }
+
+  if (!SPIDER_API_TOKEN || SPIDER_API_TOKEN === "seu_token_aqui") {
+    throw new Error("Token da API do Spider X não configurado");
+  }
+
+  return `${SPIDER_API_BASE_URL}/stickers/attp?text=${encodeURIComponent(
+    text
+  )}&api_key=${SPIDER_API_TOKEN}`;
+};
