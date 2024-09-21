@@ -1,4 +1,4 @@
-require("./logger");
+require("./utils/logger");
 const { connect } = require("./connection");
 const { load } = require("./loader");
 

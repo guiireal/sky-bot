@@ -1,7 +1,9 @@
 const { Loggings, LoggingsRegister } = require("@loggings/beta");
-const config = require("./config");
+const config = require("../config");
 
-if (!config.REGISTER_LOGS) Loggings.rem(LoggingsRegister.identify);
+if (!config.REGISTER_LOGS) {
+  Loggings.rem(LoggingsRegister.identify);
+}
 
 Loggings.useConsole(
   new Loggings(config.BOT_NAME, "cyan", {
