@@ -1,12 +1,12 @@
 const { Loggings, LoggingsRegister } = require("@loggings/beta");
-const config = require("../config");
+const { BOT_NAME, REGISTER_LOGS } = require("../config");
 
-if (!config.REGISTER_LOGS) {
+if (!REGISTER_LOGS) {
   Loggings.rem(LoggingsRegister.identify);
 }
 
 Loggings.useConsole(
-  new Loggings(config.BOT_NAME, "cyan", {
+  new Loggings(BOT_NAME, "cyan", {
     register_dir: "assets/logs",
   })
 );

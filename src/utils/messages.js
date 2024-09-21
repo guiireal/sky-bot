@@ -14,6 +14,13 @@ exports.menuMessage = () => {
 ▢
 ╰━━─「🪐」─━━
 
+╭━━⪩ DONO ⪨━━
+▢
+▢ • ${PREFIX}off
+▢ • ${PREFIX}on
+▢
+╰━━─「🌌」─━━
+
 ╭━━⪩ ADMINS ⪨━━
 ▢
 ▢ • ${PREFIX}ban
