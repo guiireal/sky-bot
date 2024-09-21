@@ -76,6 +76,20 @@ Para obter seu token, acesse: [https://api.spiderx.com.br](https://api.spiderx.c
 ```js
 exports.SPIDER_API_TOKEN = "seu_token_aqui";
 ```
+## Funcionalidades
+
+| Função | Ativo? | Contexto |
+| ------------ | --- | --- |
+| Desligar o bot no grupo | ✔ | Dono |
+| Ligar o bot no grupo | ✔ | Dono |
+| Banir membros | ✔ | Admin |
+| Busca CEP | ✔ | Membro |
+| Figurinha de texto animada | ✔ | Membro |
+| GPT | ✔ | Membro |
+| Ping | ✔ | Membro |
+| Play Áudio | ✔ | Membro |
+| Sticker | ✔ | Membro |
+| Sticker para imagem | ✔ | Membro |
 
 ## Exemplo do menu
 
