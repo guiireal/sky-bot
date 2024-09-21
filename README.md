@@ -68,7 +68,7 @@ sh termux-start.sh
 npm start
 ```
 
-## Para utilizar os comandos GPT e play-audio
+## Alguns comandos necessitam de API
 
 Edite a linha `21` do arquivo `./src/config.js` e cole sua api key da plataforma Spider X API.<br/>
 Para obter seu token, acesse: [https://api.spiderx.com.br](https://api.spiderx.com.br) e crie sua conta gratuitamente!
