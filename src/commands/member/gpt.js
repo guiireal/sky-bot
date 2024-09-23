@@ -1,5 +1,6 @@
 const { PREFIX } = require("../../config");
 const { gpt } = require("../../services/spider-x-api");
+const { InvalidParameterError } = require("../../errors/InvalidParameterError");
 
 module.exports = {
   name: "gpt",
@@ -10,8 +11,9 @@ module.exports = {
     const text = args[0];
 
     if (!text) {
-      await sendErrorReply("Você precisa me dizer o que eu devo responder!");
-      return;
+      throw new InvalidParameterError(
+        "Você precisa me dizer o que eu devo responder!"
+      );
     }
 
     await sendWaitReply();

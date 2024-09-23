@@ -1,5 +1,6 @@
 const { PREFIX } = require("../../config");
 const { playAudio } = require("../../services/spider-x-api");
+const { InvalidParameterError } = require("../../errors/InvalidParameterError");
 
 module.exports = {
   name: "play-audio",
@@ -14,8 +15,9 @@ module.exports = {
     sendErrorReply,
   }) => {
     if (!args.length) {
-      await sendErrorReply("Você precisa me dizer o que deseja buscar!");
-      return;
+      throw new InvalidParameterError(
+        "Você precisa me dizer o que deseja buscar!"
+      );
     }
 
     await sendWaitReact();
