@@ -54,7 +54,9 @@ async function connect() {
 
       if (shouldReconnect) {
         console.log("Bot [desconectado].red., [reconectando...].cyan");
-        connect();
+        connect().then((newSocket) => {
+          load(newSocket);
+        });
       }
     }
     if (connection === "open") {
