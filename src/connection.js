@@ -9,6 +9,7 @@ const {
 
 const pino = require("pino");
 const { Formatter } = require("@loggings/beta");
+const { load } = require("./loader");
 
 async function connect() {
   const { state, saveCreds } = await useMultiFileAuthState(
