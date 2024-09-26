@@ -35,6 +35,7 @@ exports.menuMessage = () => {
 ▢ • ${PREFIX}ping
 ▢ • ${PREFIX}play-audio
 ▢ • ${PREFIX}sticker
+▢ • ${PREFIX}img
 ▢ • ${PREFIX}to-image
 ▢
 ╰━━─「🚀」─━━`;
