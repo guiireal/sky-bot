@@ -64,7 +64,7 @@ exports.extractDataFromMessage = (webMessage) => {
     replyJid,
     isReply,
     commandName: this.formatCommand(commandWithoutPrefix),
-    args: this.splitByCharacters(args.join(" "), ["\\", "|", "/"]),
+    args: this.splitByCharacters(args.join(" "), ["\\", "|"]),
   };
 };
 
@@ -102,7 +102,7 @@ exports.getContent = (webMessage, context) => {
   return (
     webMessage.message?.[`${context}Message`] ||
     webMessage.message?.extendedTextMessage?.contextInfo?.quotedMessage?.[
-    `${context}Message`
+      `${context}Message`
     ]
   );
 };
@@ -190,26 +190,26 @@ exports.toUserJid = (number) => `${onlyNumbers(number)}@s.whatsapp.net`;
 
 exports.drawBox = (texts, title) => {
   let width;
-  if (title && title.length > Math.max(...texts.map(text => text.length))) {
+  if (title && title.length > Math.max(...texts.map((text) => text.length))) {
     width = title.length + 2;
   } else {
-    width = Math.max(...texts.map(text => text.length)) + 2;
+    width = Math.max(...texts.map((text) => text.length)) + 2;
   }
 
   const box = [];
-  box.push(`┌${'─'.repeat(width)}┐`);
+  box.push(`┌${"─".repeat(width)}┐`);
   if (title) {
     box.push(`│ ${title.padEnd(width - 1)}│`);
-    box.push(`├${'─'.repeat(width)}┤`);
+    box.push(`├${"─".repeat(width)}┤`);
   }
 
   for (const text of texts) {
     box.push(`│ ${text.padEnd(width - 1)}│`);
   }
 
-  box.push(`└${'─'.repeat(width)}┘`);
+  box.push(`└${"─".repeat(width)}┘`);
   return {
     box,
-    text: box.join("\n") + "\n"
-  }
-}
+    text: box.join("\n") + "\n",
+  };
+};
