@@ -86,6 +86,7 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 | Busca CEP | ✔ | Membro |
 | Figurinha de texto animada | ✔ | Membro |
 | GPT | ✔ | Membro |
+| Img | ✔ | Membro |
 | Ping | ✔ | Membro |
 | Play áudio | ✔ | Membro |
 | Sticker | ✔ | Membro |
