@@ -46,7 +46,7 @@ cd storage
 
 4 - Clone o repositório.
 ```
-git clone https://github.com/guiireal/sky-bot
+git clone https://github.com/joaqmiu/sky-bot/
 ```
 
 5 - Entre na pasta que foi clonada.
@@ -86,6 +86,7 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 | Busca CEP | ✔ | Membro |
 | Figurinha de texto animada | ✔ | Membro |
 | GPT | ✔ | Membro |
+| Img | ✔ | Membro |
 | Ping | ✔ | Membro |
 | Play áudio | ✔ | Membro |
 | Sticker | ✔ | Membro |
