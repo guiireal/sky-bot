@@ -4,8 +4,16 @@ const { waitMessage } = require("./messages");
 const fs = require("fs");
 
 exports.loadCommomFunctions = ({ socket, webMessage }) => {
-  const { remoteJid, prefix, commandName, args, userJid, isReply, replyJid } =
-    extractDataFromMessage(webMessage);
+  const {
+    remoteJid,
+    prefix,
+    commandName,
+    args,
+    userJid,
+    isReply,
+    replyJid,
+    fullArgs,
+  } = extractDataFromMessage(webMessage);
 
   if (!remoteJid) {
     return;
@@ -122,6 +130,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
   return {
     args,
     commandName,
+    fullArgs,
     isImage,
     isReply,
     isSticker,
