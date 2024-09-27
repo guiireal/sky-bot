@@ -119,7 +119,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
       remoteJid,
       {
         image: fs.readFileSync(file),
-        caption,
+        caption: caption ? `${BOT_EMOJI} ${caption}` : "",
       },
       { quoted: webMessage }
     );
@@ -130,7 +130,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
       remoteJid,
       {
         image: { url },
-        caption,
+        caption: caption ? `${BOT_EMOJI} ${caption}` : "",
       },
       { url, quoted: webMessage }
     );
