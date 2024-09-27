@@ -64,7 +64,8 @@ exports.extractDataFromMessage = (webMessage) => {
     replyJid,
     isReply,
     commandName: this.formatCommand(commandWithoutPrefix),
-    args: this.splitByCharacters(args.join(" "), ["\\", "|"]),
+    args: this.splitByCharacters(args.join(" "), ["\\", "|", "/"]),
+    fullArgs: args.join(" "),
   };
 };
 

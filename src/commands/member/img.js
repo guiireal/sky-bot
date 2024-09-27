@@ -26,14 +26,12 @@ module.exports = {
   description: "Gera uma imagem a partir da descrição fornecida",
   commands: ["img", "imagem"],
   usage: `${PREFIX}imagem <descrição>`,
-  handle: async ({ args, socket, remoteJid, sendReply }) => {
-    if (args.length === 0) {
+  handle: async ({ fullArgs, socket, remoteJid, sendReply }) => {
+    if (!fullArgs.length) {
       await sendReply("Por favor, forneça uma descrição para gerar a imagem.");
       return;
     }
 
-    const prompt = args.join(" ");
-
-    await handleImage(socket, remoteJid, prompt);
+    await handleImage(socket, remoteJid, fullArgs);
   },
 };
