@@ -21,15 +21,15 @@
  * prefix         => Prefixo do bot
  * remoteJid      => ID do grupo/usuário que está recebendo a msg
  * replyJid       => ID da mensagem que está sendo respondida
- * socket         => socket do baileys
+ * socket         => Socket do baileys
  * userJid        => ID do usuário que está mandando a msg
  * webMessageInfo => Informações da mensagem
  *
  * Funções:
  *
- * downloadImage       => download de imagem
- * downloadSticker     => download de sticker
- * downloadVideo       => download de vídeo
+ * downloadImage       => Download de imagem
+ * downloadSticker     => Download de sticker
+ * downloadVideo       => Download de vídeo
  * sendAudioFromURL    => Enviar áudio de uma URL
  * sendErrorReact      => Enviar reação de erro
  * sendErrorReply      => Enviar mensagem de erro como resposta
