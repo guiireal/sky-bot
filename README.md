@@ -85,8 +85,8 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 | Banir membros | ✔ | Admin |
 | Busca CEP | ✔ | Membro |
 | Figurinha de texto animada | ✔ | Membro |
+| Geração de imagens com IA | ✔ | Membro |
 | GPT | ✔ | Membro |
-| Img | ✔ | Membro |
 | Ping | ✔ | Membro |
 | Play áudio | ✔ | Membro |
 | Sticker | ✔ | Membro |
