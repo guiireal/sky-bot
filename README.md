@@ -105,7 +105,7 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
     - 📁 temp ➔ _arquivos temporários_
 - 📁 database ➔ _arquivos de dados_
 - 📁 node_modules ➔ _módulos do Node.js_
-- 📁 src ➔ _código fonte do bot_
+- 📁 src ➔ _código fonte do bot (geralmente você mexerá mais aqui)_
     - 📁 commands ➔ _pasta onde ficam os comandos_
         - 📁 admin ➔ _pasta onde ficam os comandos de membros_
         - 📁 member ➔ _pasta onde ficam os comandos administrativos_
