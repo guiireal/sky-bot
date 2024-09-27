@@ -96,6 +96,39 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 
 <img src="./assets/images/menu.png" width="300">
 
+## Estrutura de pastas
+
+- 📁 assets ➔ _arquivos de mídia_
+    - 📁 auth ➔ _arquivos da conexão do bot_
+    - 📁 images ➔ _imagens_
+    - 📁 logs ➔ _arquivos de logs_
+    - 📁 temp ➔ _arquivos temporários_
+- 📁 database ➔ _arquivos de dados_
+- 📁 node_modules ➔ _módulos do Node.js_
+- 📁 src ➔ _código fonte do bot_
+    - 📁 commands ➔ _pasta onde ficam os comandos_
+        - 📁 admin ➔ _pasta onde ficam os comandos de membros_
+        - 📁 member ➔ _pasta onde ficam os comandos administrativos_
+        - 📁 owner ➔ _pasta onde ficam os comandos de dono (grupo e bot)_
+        - 📝\_sample.js ➔ _arquivo de exemplo de como criar um comando_
+    - 📁 errors ➔ _classes de erros usadas nos comandos_
+    - 📁 middlewares ➔ _interceptadores de requisições_
+    - 📁 services ➔ _serviços diversos_
+    - 📁 utils ➔ _utilitários_
+    - 📝 config.js ➔ _arquivo de configurações do Bot_
+    - 📝 connection.js ➔ _script de conexão do Bot com a biblioteca Baileys_
+    - 📝 index.js ➔ _script ponto de entrada do Bot_
+    - 📝 loader.js ➔ _script de carga de funções_
+    - 📝 test.js ➔ _script de testes_
+- 📝.gitignore ➔ _arquivo para não subir certas pastas no GitHub_
+- 📝LICENSE ➔ _arquivo de licença_
+- 📝linux-start.sh ➔ _arquivo de inicialização do bot no Linux_
+- 📝package-lock.json ➔ _arquivo de cache das dependências do Bot_
+- 📝package.json ➔ _arquivo de definição das dependências do Bot_
+- 📝README.md ➔ _esta documentação_
+- 📝termux-start.sh ➔ _arquivo de inicialização do bot no Termux_
+
+
 ## Inscreva-se no canal!
 
 <a href="https://www.youtube.com/@devgui_?sub_confirmation=1" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"></a>
