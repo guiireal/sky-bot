@@ -95,9 +95,13 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
   };
 
   const sendStickerFromFile = async (file) => {
-    return await socket.sendMessage(remoteJid, {
-      sticker: fs.readFileSync(file),
-    });
+    return await socket.sendMessage(
+      remoteJid,
+      {
+        sticker: fs.readFileSync(file),
+      },
+      { quoted: webMessage }
+    );
   };
 
   const sendStickerFromURL = async (url) => {
@@ -106,14 +110,30 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
       {
         sticker: { url },
       },
-      { url }
+      { url, quoted: webMessage }
     );
   };
 
-  const sendImageFromFile = async (file) => {
-    return await socket.sendMessage(remoteJid, {
-      image: fs.readFileSync(file),
-    });
+  const sendImageFromFile = async (file, caption = "") => {
+    return await socket.sendMessage(
+      remoteJid,
+      {
+        image: fs.readFileSync(file),
+        caption,
+      },
+      { quoted: webMessage }
+    );
+  };
+
+  const sendImageFromURL = async (url, caption = "") => {
+    return await socket.sendMessage(
+      remoteJid,
+      {
+        image: { url },
+        caption,
+      },
+      { url, quoted: webMessage }
+    );
   };
 
   const sendAudioFromURL = async (url) => {
@@ -123,7 +143,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
         audio: { url },
         mimetype: "audio/mp4",
       },
-      { url }
+      { url, quoted: webMessage }
     );
   };
 
@@ -148,6 +168,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
     sendErrorReact,
     sendErrorReply,
     sendImageFromFile,
+    sendImageFromURL,
     sendReact,
     sendReply,
     sendStickerFromFile,

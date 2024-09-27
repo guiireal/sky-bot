@@ -18,6 +18,9 @@ exports.OWNER_NUMBER = "5511999999999";
 // Diretório dos comandos
 exports.COMMANDS_DIR = path.join(__dirname, "commands");
 
+// Diretório de arquivos de mídia
+exports.ASSETS_DIR = path.resolve(__dirname, "..", "assets");
+
 // Diretório de arquivos temporários
 exports.TEMP_DIR = path.resolve(__dirname, "..", "assets", "temp");
 

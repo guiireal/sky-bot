@@ -1,7 +1,7 @@
 # 🤖 Sky Bot
 
 <div align="center">
-    <img src="./assets/images/skybot.jpeg" width="300">
+    <img src="./assets/images/sky-bot.jpeg" width="300">
 </div>
 
 <br />

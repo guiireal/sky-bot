@@ -34,6 +34,7 @@
  * sendErrorReact      => Enviar reação de erro
  * sendErrorReply      => Enviar mensagem de erro como resposta
  * sendImageFromFile   => Enviar imagem de um arquivo
+ * sendImageFromURL    => Enviar imagem de uma URL
  * sendReact           => Enviar reação
  * sendReply           => Enviar mensagem de resposta
  * sendStickerFromFile => Enviar sticker de um arquivo

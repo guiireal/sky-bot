@@ -1,12 +1,16 @@
-const { PREFIX } = require("../../config");
+const { PREFIX, ASSETS_DIR } = require("../../config");
 const { menuMessage } = require("../../utils/messages");
+const path = require("path");
 
 module.exports = {
   name: "menu",
   description: "Menu de comandos",
   commands: ["menu", "help"],
   usage: `${PREFIX}menu`,
-  handle: async ({ sendReply }) => {
-    await sendReply("\n\n" + menuMessage());
+  handle: async ({ sendImageFromFile }) => {
+    await sendImageFromFile(
+      path.join(ASSETS_DIR, "images", "sky-bot.jpeg"),
+      `\n\n${menuMessage()}`
+    );
   },
 };

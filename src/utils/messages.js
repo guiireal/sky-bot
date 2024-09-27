@@ -32,7 +32,7 @@ exports.menuMessage = () => {
 ▢ • ${PREFIX}attp
 ▢ • ${PREFIX}cep
 ▢ • ${PREFIX}gpt
-▢ • ${PREFIX}img
+▢ • ${PREFIX}image
 ▢ • ${PREFIX}ping
 ▢ • ${PREFIX}play-audio
 ▢ • ${PREFIX}sticker
