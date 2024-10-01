@@ -52,3 +52,21 @@ exports.attp = async (text) => {
     text
   )}&api_key=${SPIDER_API_TOKEN}`;
 };
+
+exports.welcome = async (text, description, imageURL) => {
+  if (!text || !description || !imageURL) {
+    throw new Error(
+      "Você precisa informar o texto, descrição e URL da imagem!"
+    );
+  }
+
+  if (!SPIDER_API_TOKEN || SPIDER_API_TOKEN === "seu_token_aqui") {
+    throw new Error("Token da API do Spider X não configurado");
+  }
+
+  return `${SPIDER_API_BASE_URL}/canvas/welcome?text=${encodeURIComponent(
+    text
+  )}&description=${encodeURIComponent(
+    description
+  )}&image_url=${encodeURIComponent(imageURL)}&api_key=${SPIDER_API_TOKEN}`;
+};

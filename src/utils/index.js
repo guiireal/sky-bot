@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const { writeFile } = require("fs/promises");
 const readline = require("readline");
+const axios = require("axios");
 
 exports.question = (message) => {
   const rl = readline.createInterface({
@@ -189,28 +190,39 @@ exports.onlyNumbers = onlyNumbers;
 
 exports.toUserJid = (number) => `${onlyNumbers(number)}@s.whatsapp.net`;
 
-exports.drawBox = (texts, title) => {
-  let width;
-  if (title && title.length > Math.max(...texts.map((text) => text.length))) {
-    width = title.length + 2;
-  } else {
-    width = Math.max(...texts.map((text) => text.length)) + 2;
+exports.getBuffer = (url, options) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "get",
+      url,
+      headers: {
+        DNT: 1,
+        "Upgrade-Insecure-Request": 1,
+        range: "bytes=0-",
+      },
+      ...options,
+      responseType: "arraybuffer",
+      proxy: options?.proxy || false,
+    })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch(reject);
+  });
+};
+
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+exports.getRandomNumber = getRandomNumber;
+
+exports.getRandomName = (extension) => {
+  const fileName = getRandomNumber(0, 999999);
+
+  if (!extension) {
+    return fileName.toString();
   }
 
-  const box = [];
-  box.push(`┌${"─".repeat(width)}┐`);
-  if (title) {
-    box.push(`│ ${title.padEnd(width - 1)}│`);
-    box.push(`├${"─".repeat(width)}┤`);
-  }
-
-  for (const text of texts) {
-    box.push(`│ ${text.padEnd(width - 1)}│`);
-  }
-
-  box.push(`└${"─".repeat(width)}┘`);
-  return {
-    box,
-    text: box.join("\n") + "\n",
-  };
+  return `${fileName}.${extension}`;
 };

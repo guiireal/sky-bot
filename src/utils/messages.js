@@ -24,6 +24,7 @@ exports.menuMessage = () => {
 ╭━━⪩ ADMINS ⪨━━
 ▢
 ▢ • ${PREFIX}ban
+▢ • ${PREFIX}welcome (1/0)
 ▢
 ╰━━─「⭐」─━━
 

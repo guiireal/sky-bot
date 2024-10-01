@@ -8,8 +8,14 @@ const {
 } = require("@whiskeysockets/baileys");
 
 const pino = require("pino");
-const { Formatter } = require("@loggings/beta");
 const { load } = require("./loader");
+const {
+  warningLog,
+  infoLog,
+  errorLog,
+  primaryLog,
+  successLog,
+} = require("./utils/logger");
 
 async function connect() {
   const { state, saveCreds } = await useMultiFileAuthState(
@@ -28,40 +34,70 @@ async function connect() {
   });
 
   if (!socket.authState.creds.registered) {
-    console.log(`Credenciais ainda [não configuradas].yellow!.`);
-    console.log(
-      "Informe o seu [número de telefone].green (exemplo: [5511920202020].lime):"
-    );
+    warningLog("Credenciais ainda não configuradas!");
 
-    const phoneNumber = await question(
-      Formatter("Informe o seu [número de telefone].green: ")[0]
-    );
+    infoLog('Informe o seu número de telefone (exemplo: "5511920202020"):');
+
+    const phoneNumber = await question("Informe o seu número de telefone: ");
 
     if (!phoneNumber) {
-      throw new Error("Número de telefone [inválido].red!");
+      errorLog(
+        'Número de telefone inválido! Tente novamente com o comando "npm start".'
+      );
+
+      process.exit(1);
     }
 
     const code = await socket.requestPairingCode(onlyNumbers(phoneNumber));
 
-    console.log(`Código de pareamento: [${code}].cyan`);
+    primaryLog(`Código de pareamento: ${code}`);
   }
 
   socket.ev.on("connection.update", (update) => {
     const { connection, lastDisconnect } = update;
 
     if (connection === "close") {
-      const shouldReconnect =
+      const statusCode =
         lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
-      if (shouldReconnect) {
-        console.log("Bot [desconectado].red., [reconectando...].cyan");
+      if (statusCode === DisconnectReason.loggedOut) {
+        errorLog("Bot desconectado!");
+      } else {
+        switch (statusCode) {
+          case DisconnectReason.badSession:
+            warningLog("Sessão inválida!");
+            break;
+          case DisconnectReason.connectionClosed:
+            warningLog("Conexão fechada!");
+            break;
+          case DisconnectReason.connectionLost:
+            warningLog("Conexão perdida!");
+            break;
+          case DisconnectReason.connectionReplaced:
+            warningLog("Conexão substituída!");
+            break;
+          case DisconnectReason.multideviceMismatch:
+            warningLog("Dispositivo incompatível!");
+            break;
+          case DisconnectReason.forbidden:
+            warningLog("Conexão proibida!");
+            break;
+          case DisconnectReason.restartRequired:
+            infoLog('Me reinicie por favor! Digite "npm start".');
+            break;
+          case DisconnectReason.unavailableService:
+            warningLog("Serviço indisponível!");
+            break;
+        }
+
         connect().then((newSocket) => {
           load(newSocket);
         });
       }
-    }
-    if (connection === "open") {
-      console.log("Bot conectado com [sucesso].green.");
+    } else if (connection === "open") {
+      successLog("Fui conectado com sucesso!");
+    } else {
+      infoLog("Atualizando conexão...");
     }
   });
 
