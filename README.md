@@ -102,7 +102,6 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 - 📁 assets ➔ _arquivos de mídia_
     - 📁 auth ➔ _arquivos da conexão do bot_
     - 📁 images ➔ _imagens_
-    - 📁 logs ➔ _arquivos de logs_
     - 📁 temp ➔ _arquivos temporários_
 - 📁 database ➔ _arquivos de dados_
 - 📁 node_modules ➔ _módulos do Node.js_
