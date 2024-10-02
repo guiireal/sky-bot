@@ -93,10 +93,6 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 | Sticker | Membro | ❌
 | Sticker para imagem | Membro | ❌
 
-## Exemplo do menu
-
-<img src="./assets/images/menu.png" width="300">
-
 ## Estrutura de pastas
 
 - 📁 assets ➔ _arquivos de mídia_
