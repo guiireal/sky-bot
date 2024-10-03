@@ -11,9 +11,9 @@ exports.load = (socket) => {
     }, TIMEOUT_IN_MILLISECONDS_BY_EVENT);
   });
 
-  socket.ev.on("group-participants.update", async (data) =>
+  socket.ev.on("group-participants.update", async (data) => {
     setTimeout(() => {
       onGroupParticipantsUpdate({ socket, groupParticipantsUpdate: data });
-    }, TIMEOUT_IN_MILLISECONDS_BY_EVENT)
-  );
+    }, TIMEOUT_IN_MILLISECONDS_BY_EVENT);
+  });
 };
