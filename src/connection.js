@@ -30,7 +30,9 @@ async function connect() {
     logger: pino({ level: "error" }),
     auth: state,
     browser: ["Ubuntu", "Chrome", "20.0.04"],
+    defaultQueryTimeoutMs: undefined,
     markOnlineOnConnect: true,
+    qrTimeout: 180000,
   });
 
   if (!socket.authState.creds.registered) {
@@ -53,7 +55,7 @@ async function connect() {
     primaryLog(`Código de pareamento: ${code}`);
   }
 
-  socket.ev.on("connection.update", (update) => {
+  socket.ev.on("connection.update", async (update) => {
     const { connection, lastDisconnect } = update;
 
     if (connection === "close") {
@@ -90,9 +92,8 @@ async function connect() {
             break;
         }
 
-        connect().then((newSocket) => {
-          load(newSocket);
-        });
+        const newSocket = await connect();
+        load(newSocket);
       }
     } else if (connection === "open") {
       successLog("Fui conectado com sucesso!");
