@@ -96,6 +96,28 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 | Sticker | Membro | ❌
 | Sticker para imagem | Membro | ❌
 
+## Auto responder
+
+O Sky Bot possui um auto-responder embutido, edite o arquivo em `./assets/database/auto-responder.json`:
+
+```json
+[
+    {
+        "match": "Oi",
+        "answer": "Olá, tudo bem?"
+    },
+    {
+        "match": "Tudo bem",
+        "answer": "Estou bem, obrigado por perguntar"
+    },
+    {
+        "match": "Qual seu nome",
+        "answer": "Meu nome é Sky Bot"
+    }, // adicione uma vírgula após o fechamento da chave }, <- vírgula
+    // coloque um novo json aqui, mantendo a mesma estrutura
+]
+```
+
 ## Estrutura de pastas
 
 - 📁 assets ➔ _arquivos de mídia_
