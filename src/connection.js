@@ -13,7 +13,7 @@ const {
   warningLog,
   infoLog,
   errorLog,
-  primaryLog,
+  sayLog,
   successLog,
 } = require("./utils/logger");
 
@@ -52,7 +52,7 @@ async function connect() {
 
     const code = await socket.requestPairingCode(onlyNumbers(phoneNumber));
 
-    primaryLog(`Código de pareamento: ${code}`);
+    sayLog(`Código de pareamento: ${code}`);
   }
 
   socket.ev.on("connection.update", async (update) => {

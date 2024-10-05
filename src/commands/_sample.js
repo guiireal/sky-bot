@@ -8,6 +8,7 @@
  * Pasta member: Comandos que podem ser executados por qualquer membro do grupo
  *
  * Funções e variáveis que podem ser extraídas do handle em "handle: async ({ aqui })"
+ * Cuidado, respeite letras maiúsculas e minúsculas!
  *
  * Variáveis:
  *
@@ -27,25 +28,65 @@
  *
  * Funções:
  *
- * downloadImage       => Download de imagem
- * downloadSticker     => Download de sticker
- * downloadVideo       => Download de vídeo
- * sendAudioFromURL    => Enviar áudio de uma URL
- * sendErrorReact      => Enviar reação de erro
- * sendErrorReply      => Enviar mensagem de erro como resposta
- * sendImageFromFile   => Enviar imagem de um arquivo
- * sendImageFromURL    => Enviar imagem de uma URL
- * sendReact           => Enviar reação
- * sendReply           => Enviar mensagem de resposta
- * sendStickerFromFile => Enviar sticker de um arquivo
- * sendStickerFromURL  => Enviar sticker de uma URL
- * sendSuccessReact    => Enviar reação de sucesso
- * sendSuccessReply    => Enviar mensagem de sucesso como resposta
- * sendText            => Enviar mensagem de texto
- * sendWaitReact       => Enviar reação de espera
- * sendWaitReply       => Enviar mensagem de espera como resposta
- * sendWarningReact    => Enviar reação de aviso
- * sendWarningReply    => Enviar mensagem de aviso como resposta
+ * downloadImage()
+ * => Download de imagem
+ *
+ * downloadSticker()
+ * => Download de sticker
+ *
+ * downloadVideo()
+ * => Download de vídeo
+ *
+ * sendAudioFromURL("https://teste.com/audio.mp3")
+ * => Enviar áudio de uma URL
+ *
+ * sendErrorReact()
+ * => Enviar reação de erro
+ *
+ * sendErrorReply("texto")
+ * => Enviar mensagem de erro como resposta
+ *
+ * sendImageFromFile("./path/to/image.png")
+ * => Enviar imagem de um arquivo
+ *
+ * sendImageFromURL("https://teste.com/imagem.png")
+ * => Enviar imagem de uma URL
+ *
+ * sendReact("emoji")
+ * => Enviar reação
+ *
+ * sendReply("texto")
+ * => Enviar mensagem de resposta
+ *
+ * sendStickerFromFile("./path/to/sticker.webp")
+ * => Enviar sticker de um arquivo
+ *
+ * sendStickerFromURL("https://teste.com/sticker.webp")
+ * => Enviar sticker de uma URL
+ *
+ * sendSuccessReact()
+ * => Enviar reação de sucesso
+ *
+ * sendSuccessReply()
+ * => Enviar mensagem de sucesso como resposta
+ *
+ * sendText("texto")
+ * => Enviar mensagem de texto
+ *
+ * sendVideoFromURL("https://teste.com/video.mp4")
+ * => Enviar vídeo de uma URL
+ *
+ * sendWaitReact()
+ * => Enviar reação de espera
+ *
+ * sendWaitReply()
+ * => Enviar mensagem de espera como resposta
+ *
+ * sendWarningReact()
+ * => Enviar reação de aviso
+ *
+ * sendWarningReply("texto")
+ * => Enviar mensagem de aviso como resposta
  */
 const { PREFIX } = require("../../config");
 

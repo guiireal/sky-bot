@@ -30,13 +30,15 @@ exports.extractDataFromMessage = (webMessage) => {
 
   if (!fullMessage) {
     return {
-      remoteJid: null,
-      userJid: null,
-      prefix: null,
-      commandName: null,
-      isReply: false,
-      replyJid: null,
       args: [],
+      commandName: null,
+      fullArgs: null,
+      fullMessage: null,
+      isReply: false,
+      prefix: null,
+      remoteJid: null,
+      replyJid: null,
+      userJid: null,
     };
   }
 
@@ -59,14 +61,15 @@ exports.extractDataFromMessage = (webMessage) => {
   const commandWithoutPrefix = command.replace(new RegExp(`^[${PREFIX}]+`), "");
 
   return {
-    remoteJid: webMessage?.key?.remoteJid,
-    prefix,
-    userJid,
-    replyJid,
-    isReply,
-    commandName: this.formatCommand(commandWithoutPrefix),
     args: this.splitByCharacters(args.join(" "), ["\\", "|", "/"]),
+    commandName: this.formatCommand(commandWithoutPrefix),
     fullArgs: args.join(" "),
+    fullMessage,
+    isReply,
+    prefix,
+    remoteJid: webMessage?.key?.remoteJid,
+    replyJid,
+    userJid,
   };
 };
 

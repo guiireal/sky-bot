@@ -1,23 +1,24 @@
 # 🤖 Sky Bot
 
 <div align="center">
-    <img src="./assets/images/sky-bot.jpeg" width="300">
+    <img src="./assets/images/sky-bot.png" width="300">
 </div>
 
 <br />
 
 <div align="center">
     <a href="https://github.com/Projetos-Crescer/zig-app">
-        <img alt="Version" src="https://img.shields.io/badge/Vers%C3%A3o-1.4.1-blue">
+        <img alt="Version" src="https://img.shields.io/badge/Vers%C3%A3o-1.5.0-blue">
     </a>
 </div>
 
 <br />
 
-Bot de WhatsApp multi funções, desenvolvido no vídeo:
+## Bot de WhatsApp multi funções, desenvolvido no vídeo:
 
 [CRIANDO UM BOT DE WHATSAPP DO ZERO (GUIA DEFINITIVO) - BASE COMPLETA + 6 COMANDOS - JAVASCRIPT](https://youtu.be/6zr2NYIYIyc)
 
+![](./assets/images/logger.png)
 
 ## Tecnologias envolvidas
 
@@ -70,7 +71,7 @@ npm start
 
 ## Alguns comandos necessitam de API
 
-Edite a linha `21` do arquivo `./src/config.js` e cole sua api key da plataforma Spider X API.<br/>
+Edite a linha `34` do arquivo `./src/config.js` e cole sua api key da plataforma Spider X API.<br/>
 Para obter seu token, acesse: [https://api.spiderx.com.br](https://api.spiderx.com.br) e crie sua conta gratuitamente!
 
 ```js
@@ -83,6 +84,7 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 | Desligar o bot no grupo | Dono | ❌
 | Ligar o bot no grupo | Dono | ❌
 | Banir membros | Admin | ❌
+| Ligar/desligar auto responder | Admin | ❌
 | Ligar/desligar boas vindas | Admin | ❌
 | Busca CEP | Membro | ❌
 | Figurinha de texto animada | Membro | ❌
@@ -90,6 +92,7 @@ exports.SPIDER_API_TOKEN = "seu_token_aqui";
 | GPT | Membro | ✅
 | Ping | Membro | ❌
 | Play áudio | Membro | ✅
+| Play vídeo | Membro | ✅
 | Sticker | Membro | ❌
 | Sticker para imagem | Membro | ❌
 

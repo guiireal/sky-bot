@@ -23,6 +23,7 @@ exports.menuMessage = () => {
 
 ╭━━⪩ ADMINS ⪨━━
 ▢
+▢ • ${PREFIX}auto-responder (1/0)
 ▢ • ${PREFIX}ban
 ▢ • ${PREFIX}welcome (1/0)
 ▢
@@ -36,6 +37,7 @@ exports.menuMessage = () => {
 ▢ • ${PREFIX}image
 ▢ • ${PREFIX}ping
 ▢ • ${PREFIX}play-audio
+▢ • ${PREFIX}play-video
 ▢ • ${PREFIX}sticker
 ▢ • ${PREFIX}to-image
 ▢

@@ -5,6 +5,7 @@ const databasePath = path.resolve(__dirname, "..", "..", "database");
 
 const INACTIVE_GROUPS_FILE = "inactive-groups";
 const NOT_WELCOME_GROUPS_FILE = "not-welcome-groups";
+const INACTIVE_AUTO_RESPONDER_GROUPS_FILE = "inactive-auto-responder-groups";
 
 function createIfNotExists(fullPath) {
   if (!fs.existsSync(fullPath)) {
@@ -98,4 +99,58 @@ exports.isActiveWelcomeGroup = (groupId) => {
   const notWelcomeGroups = readJSON(filename);
 
   return !notWelcomeGroups.includes(groupId);
+};
+
+exports.getAutoResponderResponse = (match) => {
+  const filename = "auto-responder";
+
+  const responses = readJSON(filename);
+
+  const matchUpperCase = match.toLocaleUpperCase();
+
+  const data = responses.find(
+    (response) => response.match.toLocaleUpperCase() === matchUpperCase
+  );
+
+  if (!data) {
+    return null;
+  }
+
+  return data.answer;
+};
+
+exports.activateAutoResponderGroup = (groupId) => {
+  const filename = INACTIVE_AUTO_RESPONDER_GROUPS_FILE;
+
+  const inactiveAutoResponderGroups = readJSON(filename);
+
+  const index = inactiveAutoResponderGroups.indexOf(groupId);
+
+  if (index === -1) {
+    return;
+  }
+
+  inactiveAutoResponderGroups.splice(index, 1);
+
+  writeJSON(filename, inactiveAutoResponderGroups);
+};
+
+exports.deactivateAutoResponderGroup = (groupId) => {
+  const filename = INACTIVE_AUTO_RESPONDER_GROUPS_FILE;
+
+  const inactiveAutoResponderGroups = readJSON(filename);
+
+  if (!inactiveAutoResponderGroups.includes(groupId)) {
+    inactiveAutoResponderGroups.push(groupId);
+  }
+
+  writeJSON(filename, inactiveAutoResponderGroups);
+};
+
+exports.isActiveAutoResponderGroup = (groupId) => {
+  const filename = INACTIVE_AUTO_RESPONDER_GROUPS_FILE;
+
+  const inactiveAutoResponderGroups = readJSON(filename);
+
+  return !inactiveAutoResponderGroups.includes(groupId);
 };

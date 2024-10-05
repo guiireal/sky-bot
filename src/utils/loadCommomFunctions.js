@@ -5,14 +5,15 @@ const fs = require("fs");
 
 exports.loadCommomFunctions = ({ socket, webMessage }) => {
   const {
-    remoteJid,
-    prefix,
-    commandName,
     args,
-    userJid,
-    isReply,
-    replyJid,
+    commandName,
     fullArgs,
+    fullMessage,
+    isReply,
+    prefix,
+    remoteJid,
+    replyJid,
+    userJid,
   } = extractDataFromMessage(webMessage);
 
   if (!remoteJid) {
@@ -147,10 +148,21 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
     );
   };
 
+  const sendVideoFromURL = async (url) => {
+    return await socket.sendMessage(
+      remoteJid,
+      {
+        video: { url },
+      },
+      { url, quoted: webMessage }
+    );
+  };
+
   return {
     args,
     commandName,
     fullArgs,
+    fullMessage,
     isImage,
     isReply,
     isSticker,
@@ -176,6 +188,7 @@ exports.loadCommomFunctions = ({ socket, webMessage }) => {
     sendSuccessReact,
     sendSuccessReply,
     sendText,
+    sendVideoFromURL,
     sendWaitReact,
     sendWaitReply,
     sendWarningReact,

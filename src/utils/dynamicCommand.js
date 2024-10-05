@@ -4,16 +4,40 @@ const { WarningError } = require("../errors/WarningError");
 const { findCommandImport } = require(".");
 const { verifyPrefix, hasTypeOrCommand } = require("../middlewares");
 const { checkPermission } = require("../middlewares/checkPermission");
-const { isActiveGroup } = require("./database");
+const {
+  isActiveGroup,
+  getAutoResponderResponse,
+  isActiveAutoResponderGroup,
+} = require("./database");
 const { errorLog } = require("../utils/logger");
+const { ONLY_GROUP_ID } = require("../config");
 
 exports.dynamicCommand = async (paramsHandler) => {
-  const { commandName, prefix, sendWarningReply, sendErrorReply, remoteJid } =
-    paramsHandler;
+  const {
+    commandName,
+    prefix,
+    sendWarningReply,
+    sendErrorReply,
+    remoteJid,
+    sendReply,
+    fullMessage,
+  } = paramsHandler;
 
   const { type, command } = findCommandImport(commandName);
 
+  if (ONLY_GROUP_ID && ONLY_GROUP_ID !== remoteJid) {
+    return;
+  }
+
   if (!verifyPrefix(prefix) || !hasTypeOrCommand({ type, command })) {
+    if (isActiveAutoResponderGroup(remoteJid)) {
+      const response = getAutoResponderResponse(fullMessage);
+
+      if (response) {
+        await sendReply(response);
+      }
+    }
+
     return;
   }
 

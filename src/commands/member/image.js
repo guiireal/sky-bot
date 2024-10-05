@@ -25,8 +25,12 @@ module.exports = {
 
     const response = await herc.drawImage({
       model: "simurg",
-      prompt: fullArgs,
-      negative_prompt: "",
+      prompt: `Generate a realistic image, 
+without deviating from the proposed theme below (attention, it may come in Portuguese, 
+translate it into English first):
+      
+${fullArgs}`,
+      negative_prompt: "nude, explicit, adult, nsfw",
     });
 
     await sendSuccessReact();

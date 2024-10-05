@@ -1,7 +1,7 @@
 const path = require("path");
 
 // Prefixo dos comandos
-exports.PREFIX = "/";
+exports.PREFIX = "#";
 
 // Emoji do bot (mude se preferir)
 exports.BOT_EMOJI = "🤖";
@@ -25,7 +25,7 @@ exports.ASSETS_DIR = path.resolve(__dirname, "..", "assets");
 exports.TEMP_DIR = path.resolve(__dirname, "..", "assets", "temp");
 
 // Timeout em milissegundos por evento (evita banimento)
-exports.TIMEOUT_IN_MILLISECONDS_BY_EVENT = 700;
+exports.TIMEOUT_IN_MILLISECONDS_BY_EVENT = 300;
 
 // Plataforma de API's
 exports.SPIDER_API_BASE_URL = "https://api.spiderx.com.br/api";
@@ -33,5 +33,5 @@ exports.SPIDER_API_BASE_URL = "https://api.spiderx.com.br/api";
 // Obtenha seu token, criando uma conta em: https://api.spiderx.com.br
 exports.SPIDER_API_TOKEN = "seu_token_aqui";
 
-// Permita o sistema registrar os logs
-exports.REGISTER_LOGS = true;
+// Caso queira responder apenas um grupo específico, coloque o ID dele aqui (ex: 120363023799506419@g.us). Apenas para testes internos!
+exports.ONLY_GROUP_ID = "120363023799506419@g.us";
