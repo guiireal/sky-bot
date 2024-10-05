@@ -114,7 +114,8 @@ O Sky Bot possui um auto-responder embutido, edite o arquivo em `./assets/databa
         "match": "Qual seu nome",
         "answer": "Meu nome é Sky Bot"
     }, // adicione uma vírgula após o fechamento da chave }, <- vírgula
-    // coloque um novo json aqui, mantendo a mesma estrutura
+
+    // coloque mais objetos json
 ]
 ```
 
